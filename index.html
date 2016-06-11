@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Targeting various IE Browsers. Currently no classes exist to support this -->
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Clicker App</title>
+		<meta name="description" content="">
+
+    <!-- Angular Material CSS now available via Google CDN; version 0.11.4 used here -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.css">
+
+    <!-- Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet/less" type="text/css" href="/styles/global.styles.less" />
+    <link rel="stylesheet/less" type="text/css" href="/styles/helper.styles.less" />
+    <link rel="stylesheet/less" type="text/css" href="/styles/overrides.styles.less" />
+    <link rel="stylesheet/less" type="text/css" href="/game/game.styles.less" />
+  </head>
+
+  <body ng-app="clickerApp" ng-controller="MainController as main">
+    <!-- <ui-view></ui-view> -->
+
+    <div id="clicker-wrap">
+      <ui-view></ui-view>
+    </div>
+
+    <!-- Angular Material Dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+    <!-- Angular Material -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"></script>
+
+    <!-- Angular UI Router -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+
+    <!-- lodash -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.8.2/lodash.min.js"></script>
+
+    <!-- LESS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
+
+	<!-- app scripts -->
+    <script src="app.js"></script>
+    <script src="/global/factories/resource.factory.js"></script>
+    <script src="/global/data/game.data.js"></script>
+    <script src="/game/game.controller.js"></script>
+  </body>
+</html>

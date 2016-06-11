@@ -1,0 +1,56 @@
+@import "../styles/colors";
+@import "../styles/mixins";
+@import "../styles/sizes";
+
+#game-wrap {
+	
+	#content {
+		background-color: #eee;
+		margin: 20px;
+
+		section.left-panel {
+			border-right: 1px solid #ccc;
+			
+			.click-target {
+				.font-size(30);
+				cursor: pointer;
+			}
+
+			.stats {
+				padding: 20px;
+
+				span {
+
+				}
+			}
+		}
+
+		section.center-panel {
+			border-right: 1px solid #ccc;
+
+			.content {
+				padding: 20px;
+
+				.resource {
+					border-bottom: 1px solid #ccc;
+					padding: 10px 0;
+
+					p {
+						padding: 0 10px;
+						font-style: italic; 
+					}
+
+					&:last-child {
+						border: none;
+					}
+				}
+			}
+
+		}
+
+		section.right-panel {
+
+		}
+
+	}
+}

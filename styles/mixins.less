@@ -1,0 +1,9 @@
+@import "colors";
+@import "sizes";
+
+.font-size(@rem: @base-font-size) {
+  @size: (@base-font-size * @rem);
+  //Intentional style overwrite for legacy browser fallback.
+  font-size: @size * 1px;
+  font-size: ~"@{rem}rem";
+}

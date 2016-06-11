@@ -1,0 +1,47 @@
+<div id="game-wrap">
+	<md-toolbar>
+    <h2>Title</h2>
+  </md-toolbar>
+  <md-whiteframe class="md-whiteframe-2dp" layout="row" id="content">
+    <section class="left-panel" flex>
+    	<md-toolbar>
+		    <h2>Basic Resources</h2>
+		  </md-toolbar>
+		  <div layout="row" layout-align="center start">
+				<i class="material-icons click-target" ng-click="vm.onClick()">group_work</i>
+		  </div>
+		  <div layout="column" class="stats">
+				<span><span class="bold">Points:</span> {{vm.points}}</span>
+				<span><span class="bold">Per Second:</span> 0</span>
+				<span><span class="bold">Auto Clicker:</span> 0</span>
+		  </div>
+  	</section>
+  	<section class="center-panel" flex>
+  		<md-toolbar>
+		    <h2>Resources</h2>
+		  </md-toolbar>
+		  <div layout="column" class="content">
+		  	<div ng-repeat="resource in vm.resources" class="resource">
+		  		<div layout="row" layout-align="space-between center">
+						<span>{{resource.name}} ({{resource.owned}})</span>
+			  		<div>
+							<span>cost: {{resource.cost}}</span>
+							<md-button class="md-raised md-primary">Buy</md-button>
+			  		</div>
+		  		</div>
+		  		<p>{{resource.description}}</p>
+		  	</div>
+		  </div>
+  	</section>
+  	<section class="right-panel" flex>
+  		<md-toolbar>
+		    <h2>Factories</h2>
+		  </md-toolbar>
+			<p>content</p>
+			<p>content</p>
+			<p>content</p>
+  	</section>
+  </md-whiteframe>
+</div>
+
+
