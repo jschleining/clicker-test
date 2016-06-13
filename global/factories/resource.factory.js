@@ -1,19 +1,23 @@
 angular.module('clickerApp')
 
-.factory('Resource', function() {
+.factory('Resources', function() {
 
-  return function(data) {
+  var Resource = function(data) {
     var factory_ = this;
+    factory_.id = data.id;
     factory_.name = data.name;
     factory_.description = data.description;
     factory_.cost = data.cost;
     factory_.owned = data.owned;
+  }
 
-    factory_.updateQuantity = updateQuantity_;
+  Resource.prototype.updateQuantity = function(qty) {
+    this.owned += qty;
+  }
 
-    function updateQuantity_(qty) {
-      factory_.owned += qty;
+  return {
+    getResource: function(data) {
+      return new Resource(data);
     }
-  };
-
+  }
 });

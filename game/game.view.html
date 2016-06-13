@@ -1,32 +1,35 @@
 <div id="game-wrap">
-	<md-toolbar>
+	<md-toolbar layout="row" layout-align="space-between center">
     <h2>Title</h2>
+    <i class="material-icons pause" ng-if="!vm.paused" ng-click="vm.stop()">pause</i>
+    <i class="material-icons play" ng-if="vm.paused" ng-click="vm.start()">play_arrow</i>
   </md-toolbar>
   <md-whiteframe class="md-whiteframe-2dp" layout="row" id="content">
     <section class="left-panel" flex>
-    	<md-toolbar>
+    	<md-toolbar class="header">
 		    <h2>Basic Resources</h2>
 		  </md-toolbar>
-		  <div layout="row" layout-align="center start">
-				<i class="material-icons click-target" ng-click="vm.onClick()">group_work</i>
-		  </div>
-		  <div layout="column" class="stats">
-				<span><span class="bold">Points:</span> {{vm.points}}</span>
-				<span><span class="bold">Per Second:</span> 0</span>
+		  <div layout="column" class="content">
+		  	<div layout="row" layout-align="center start">
+					<i class="material-icons click-target" ng-click="vm.onClickTargetClick()">group_work</i>
+			  </div>
+				<span><span class="bold">Points:</span> {{vm.widgets}}</span>
+				<span><span class="bold">Per Second:</span> {{vm.wps}}</span>
 				<span><span class="bold">Auto Clicker:</span> 0</span>
+				<span><span class="bold">Ticks:</span> {{vm.ticks}}</span>
 		  </div>
   	</section>
   	<section class="center-panel" flex>
-  		<md-toolbar>
+  		<md-toolbar class="header">
 		    <h2>Resources</h2>
 		  </md-toolbar>
 		  <div layout="column" class="content">
-		  	<div ng-repeat="resource in vm.resources" class="resource">
+		  	<div ng-repeat="resource in vm.resources track by $index" class="resource">
 		  		<div layout="row" layout-align="space-between center">
 						<span>{{resource.name}} ({{resource.owned}})</span>
 			  		<div>
 							<span>cost: {{resource.cost}}</span>
-							<md-button class="md-raised md-primary">Buy</md-button>
+							<md-button class="md-raised md-primary" ng-click="vm.buyResource($index)">Buy</md-button>
 			  		</div>
 		  		</div>
 		  		<p>{{resource.description}}</p>
@@ -34,12 +37,21 @@
 		  </div>
   	</section>
   	<section class="right-panel" flex>
-  		<md-toolbar>
+  		<md-toolbar class="header">
 		    <h2>Factories</h2>
 		  </md-toolbar>
-			<p>content</p>
-			<p>content</p>
-			<p>content</p>
+			<div layout="column" class="content">
+		  	<div ng-repeat="factory in vm.factories track by $index" class="factory">
+		  		<div layout="row" layout-align="space-between center">
+						<span>{{factory.name}} ({{factory.owned}}) (WPS: {{factory.production}})</span>
+			  		<div>
+							<span>cost: {{factory.cost}}</span>
+							<md-button class="md-raised md-primary" ng-click="vm.buyFactory($index)">Buy</md-button>
+			  		</div>
+		  		</div>
+		  		<p>{{factory.description}}</p>
+		  	</div>
+		  </div>
   	</section>
   </md-whiteframe>
 </div>

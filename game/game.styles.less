@@ -3,16 +3,36 @@
 @import "../styles/sizes";
 
 #game-wrap {
-	
+	height: 100%;
+
+	.pause,
+	.play {
+		cursor: pointer;
+	}
+
 	#content {
 		background-color: #eee;
+		//height: calc(~"100% - 110px");
 		margin: 20px;
+		min-height: 500px;
+
+		section {
+			min-height: 500px;
+
+			.content {
+				height: calc(~"100% - 70px");
+				overflow-y: auto;
+			}
+		}
 
 		section.left-panel {
 			border-right: 1px solid #ccc;
+
+			
 			
 			.click-target {
 				.font-size(30);
+				color: #800;
 				cursor: pointer;
 			}
 
@@ -45,11 +65,27 @@
 					}
 				}
 			}
-
 		}
 
 		section.right-panel {
 
+			.content {
+				padding: 20px;
+
+				.factory {
+					border-bottom: 1px solid #ccc;
+					padding: 10px 0;
+
+					p {
+						padding: 0 10px;
+						font-style: italic; 
+					}
+
+					&:last-child {
+						border: none;
+					}
+				}
+			}
 		}
 
 	}

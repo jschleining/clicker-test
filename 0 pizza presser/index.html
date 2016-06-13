@@ -1,0 +1,671 @@
+
+<html>
+
+<head> <!-- Holds links to CSS, Fonts, Jquery, JS. Holds the Title and Icon at the top of your Browser as well -->
+
+<!-- 
+                _____
+             ,-"     "-.
+            / o       o \                 Thanks for checking out the source code behind Pizza Presser!  
+           /   \     /   \
+          /     )-"-(     \               If you're a newbie interested in learning how to make your own incremental game,
+         /     ( 6 6 )     \              looking at other peoples code is difficult to understand. Check out the blog section
+        /       \ " /       \             for a detailed tutorial to get you started!
+       /         )=(         \
+      /   o   .--"-"--.   o   \           If you're an experienced developer checking out the code, most of the code behind Pizza 
+     /    I  /  -   -  \  I    \          Presser will make you cry. I know it sure as hell makes me cry. Please understand that
+ .--(    (_}y/\       /\y{_)    )--.      I didn't know a shred of Javascript when I first started building this game. Don't 
+(    ".___l\/__\_____/__\/l___,"    )     judge me. Go and look at how gross the save and load functions are. I dare you.
+ \                                 /
+  "-._      o O o O o O o      _,-"
+      `--Y--.___________.--Y--'
+         |==.___________.==| hjw
+         `==.___________.==' `97
+-->	
+
+<!-- Credits 
+
+Big shout out to r/Incremental_Games!
+
+There are random bits and bobs of code that I've used from r/incremental games and altered slighly.
+Credits go to whoevers code I butchered. If you would like a name or link in here, contact me <3
+
+Flappy Pizza: all the credit goes to this guy: http://blog.lessmilk.com/how-to-make-flappy-bird-in-html5-1/
+
+Background images are from http://subtlepatterns.com/
+
+Awesome Alien ASCII belongs to this dude: http://www.chris.com/ascii/
+
+If I've missed anyone, send me a message! 
+
+End Credits -->
+
+<meta charset="utf-8">
+<meta name="p:domain_verify" content="17b2135dee7af764b6808693ac8a5287"/>
+<link rel="stylesheet" type="text/css" href="interface.css" /> <!-- Links to the CSS file -->
+<link href='http://fonts.googleapis.com/css?family=Lemon' rel='stylesheet' type='text/css'> <!-- Links to the font -->
+<title>Pizza Presser - A pizza clicking incremental game</title> <!-- Title at the top of your Browser -->
+<meta name="Description" content="Pizza Presser is a fun and addicting pizza clicking incremental game that you can play in your browser. You'll be in charge of the delivery of millions of pizzas."><!-- Description -->
+<meta name="Author" content="Joe Morrell | MOJO-WEBDESIGNS.COM | PIZZAPRESSER.COM"> <!-- Author -->
+<link rel="shortcut icon" href="../img/icon.ico"> <!-- Tab Icon -->
+<link rel="stylesheet" type="text/css" href="jquery-ui.css">
+<script type="text/javascript" src="jquery.js" charset="utf8"></script> <!-- Links to the JQ file -->
+<script src="jquery-ui.js"></script>
+<script>
+  $(function() {
+    $( "#dialog" ).dialog();
+    $( "#tutorial" ).click(function() {
+      $( "#dialog" ).dialog( "open" );
+    });
+  });
+</script>
+
+<script>
+  $(function() {
+    $( "#dialog2" ).dialog({
+  autoOpen: false
+	});
+    $( "#updates" ).click(function() {
+      $( "#dialog2" ).dialog( "open" );
+    });
+  });
+</script>
+<script>
+  $(function() {
+    $( "#dialog3" ).dialog({
+  autoOpen: false
+	});
+    $( "#faq" ).click(function() {
+      $( "#dialog3" ).dialog( "open" );
+    });
+  });
+</script>
+<script>
+  $(function() {
+    $( "#dialog4" ).dialog({
+  autoOpen: false
+	});
+    $( "#donators" ).click(function() {
+      $( "#dialog4" ).dialog( "open" );
+    });
+  });
+</script>
+
+</head>
+
+<body onload="loadGame(); pizzaPerSecond(); loadWorker(); loadCart(); loadVan(); loadParlour(); loadRestaurant(); loadPalace(); loadFactory(); loadConverter(); loadWeatherMachine(); loadSuperDrill(); loadMoonBase(); updateColours()" scroll="no" style="overflow: hidden">	<!-- Loads the game from last save and removes the scroll bar because of the dodgy width -->
+
+
+	<div id="dialog" title="Tutorial">
+		<ol>
+			<li>Click the pizza</li>
+			<li>Sell your pizzas</li>
+			<li>Buy pizza makers and resources with your money</li>
+			<li>Use your resources to create pizza makers</li>
+			<li>Check out the upgrades</li>
+			<li>The game automatically saves every minute</li>
+			<li>Build your empire</li>
+			<li>Become a fookin' legend!</li>
+		</ol>
+		<div class="liney"></div>
+		<p>Pizza Presser relies on adverts and donations to stay running. If you disabled adblock I would love you :)</p>
+	</div>
+
+	<div id="dialog2" title="Updates">
+	 	<p>Version: 2.2 - 01/19/2015 </p>
+		<ul>
+			<li>NEW PIZZA!!!</li>
+			<li>Pizza animation</li>
+			<li>Coloured Prices</li>
+			<li>Quests!</li>
+			<li>Cleaned up the UI</li>
+			<li>Donators, FAQ, and Updates added as popups</li>
+			<li>Bug fixes</li>
+			<li>Button spacing fixed</li>
+			<li>Stats added</li>
+			<li>Responsive tweaks</li>
+		</ul>
+	</div>
+
+	<div id="dialog3" title="FAQ">
+	 
+		<h4 class="faqtitle">What do I do?</h4>
+		<p>Read the tutorial!</p>
+
+		<h4 class="faqtitle">Can I buy upgrades more than once?</h4>
+		<p>Don't test me.</p>
+
+		<h4 class="faqtitle">I can't buy pizza fuel!!!</h4>
+		<p>Pizzas, not money!</p>
+
+		<h4 class="faqtitle">Why do you use ads?</h4>
+		<p>The ads you can see generate money to cover the hosting costs.</p>
+
+		<h4 class="faqtitle">It wont let me buy x, help?</h4>
+		<p>Remember to click sell all pizzas dummy.	</p>
+
+	</div>
+
+	<div id="dialog4" title="Donators">
+		<ol>
+   			<li>John: Be excellent to each other. And... PIZZA ON, DUDES! - £15</li>
+    		<li>Tim: Thank you for making this sweet game! :) £10</li>
+   		    <li>Harry: #CoolGameBro £0.50</li>
+    	</ol>
+	</div>
+
+	<div id="top"> <!-- Navigation Bar -->
+
+		<!-- Navigation Links -->
+		<p class="toptext"><a href="http://pizzapresser.com" target="_blank"> Pizza Presser</a> | <a href="https://www.facebook.com/pages/Pizza-Presser/263208693852892" target="_blank"> Facebook </a> | <a href="https://twitter.com/pizzapresser" target="_blank"> Twitter</a> | <a href="http://www.reddit.com/r/Pizza_Presser/" target="_blank"> Reddit </a> | <a href="http://pizzapresser.tumblr.com/" target="_blank"> Tumblr</a>  | <a href="http://www.pinterest.com/PizzaPresser/" target="_blank"> Pin</a> | <a href="blog.html" target="_blank">Blog</a> | <span id="updates">Updates</span> | <span id="faq">FAQ</span> | <span id="donators">Donators</span> | <a href="http://www.amazon.com/gp/product/B00MBHNIGS/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00MBHNIGS&linkCode=as2&tag=allthislo-20&linkId=ANU7C7MKJBC7YMH6">Amazon</a> | <span id="tutorial">Tutorial</span></p>
+
+		<!-- End of Navigation Links -->
+
+		<!-- PayPal Donate Button -->
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="63E9ACATAECSU">
+		<input class="toptextright" type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+		<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+		</form>
+
+		<!-- End of PayPal Donate Button -->
+
+	</div> <!-- End of Navigation Bar -->
+
+	<div class="scrollable" id="left">  <!-- Scroll Bar between Left and Middle -->
+
+	<h1 class="textmiddle">Basic Resources </h1>
+
+	<div id="floaty-text-wrapper" onClick="pizzaClick(1); CreateFloat();">
+		<span id="pizzapic" type="button"><img src="../img/newpizza.png" alt="Pizza Delivery Game - Giant Pizza"></span>
+	</div>
+
+	<!-- Total Pizza -->
+	<p class="pizzapos">Pizza: <span id="pizza">0</span></p>
+
+	
+
+	<!-- Pizza Per Second -->
+	<p class="pizzapos">Per Second: <span id="second">0</span></p>
+
+	<!-- Auto Clicker Per Second -->
+	<p class="pizzapos" id="autoClickerHide">Auto Clicker: <span id="autoClickerNum">0</span><span>/s</span></p><br>
+
+	<!-- Sell all pizzas -->
+	<span>
+	<button type="fix" id="button1" onClick="sellClick(1)"><span class="sellpos">Sell All Pizzas!</span></button>
+	</span>
+	<!-- Total Money -->
+	<p class="pizzapos">Money: $<span id="money">0</span><p>
+
+	<!-- Divider -->	
+	<div class="xpdivider"></div>	
+
+	<div id="sloppy"></div> <!-- Fixes height issue / scroll issue -->
+
+</div> <!-- End of Left -->
+
+<div id="leftdivider"></div> <!-- Left Divider -->
+	
+<div class="scrollable" id="middle"> <!-- Scroll Bar Between Middle and Right-->	
+
+	<h1 class="textmiddle">Resources</h1>	
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- Pizza Presser Responsive Banner -->
+	<ins class="adsbygoogle"
+     style="display:block; z-index: 999999999;"
+     data-ad-client="ca-pub-9749109471618569"
+     data-ad-slot="5968551538"
+     data-ad-format="auto"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
+	<button id="mybox" type="fix" onClick="buySlave()"><span class="text">Buy a Slave! </span><span id="slave" class="pullright">0</span><br>$<span id="slaveCost">20</span></button>
+	<div id="tooltip"><p>A slave is used to run pizza makers and can be used as a pizza delivery driver.</p></div>
+	<button id="smallbox10" type="smallButton" onClick="buyTenSlave()"><span class="textSmall">Buy 10!</span>
+	<button id="smallbox100" type="smallButtons" onClick="buyHundredSlave()"><span class="textSmall">Buy 100!</span>
+	<button id="smallbox1000" type="smallButtons" onClick="buyThousandSlave()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox1" type="fix" onClick="buyCleaner()"><span class="text">Buy a Cleaner! </span><span id="cleaner" class="pullright">0</span><br>$<span id="cleanerCost">30</span></button> 
+	<div id="tooltip1"><p>A cleaner is used to clean up all the mess the slaves make.</p></div>
+	<button id="1smallbox10" type="smallButton" onClick="buyTenCleaner()"><span class="textSmall">Buy 10!</span>
+	<button id="1smallbox100" type="smallButtons" onClick="buyHundredCleaner()"><span class="textSmall">Buy 100!</span>
+	<button id="1smallbox1000" type="smallButtons" onClick="buyThousandCleaner()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox2" type="fix" onClick="buyManager()"><span class="text">Buy a Manager! </span><span id="manager" class="pullright">0</span><br>$<span id="managerCost">40</span></button> 
+	<div id="tooltip2"><p>A manager makes sure all the slaves and cleaners are working.</p></div>
+	<button id="2smallbox10" type="smallButton" onClick="buyTenManager()"><span class="textSmall">Buy 10!</span>
+	<button id="2smallbox100" type="smallButtons" onClick="buyHundredManager()"><span class="textSmall">Buy 100!</span>
+	<button id="2smallbox1000"type="smallButtons" onClick="buyThousandManager()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox3" type="fix" onClick="buyOperator()"><span class="text">Buy an Operator! </span><span id="operator" class="pullright">0</span><br>$<span id="operatorCost">500</span></button>
+	<div id="tooltip3"><p>An operator makes sure all the slaves are building the machines correctly.</p></div>
+	<button id="3smallbox10" type="smallButton" onClick="buyTenOperator()"><span class="textSmall">Buy 10!</span>
+	<button id="3smallbox100" type="smallButtons" onClick="buyHundredOperator()"><span class="textSmall">Buy 100!</span>
+	<button id="3smallbox1000" type="smallButtons" onClick="buyThousandOperator()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox4" type="fix" onClick="buyScientist()"><span class="text">Buy a Scientist! </span><span id="scientist" class="pullright">0</span><br>$<span id="scientistCost">1,000</span></button>
+	<div id="tooltip4"><p>A scientist figures out the complicated stuff.</p></div>
+	<button id="4smallbox10" type="smallButton" onClick="buyTenScientist()"><span class="textSmall">Buy 10!</span>
+	<button id="4smallbox100" type="smallButtons" onClick="buyHundredScientist()"><span class="textSmall">Buy 100!</span>
+	<button id="4smallbox1000" type="smallButtons" onClick="buyThousandScientist()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox5" type="fix" onClick="buyAstronaut()"><span class="text">Buy an Astronaut! </span><span id="astronaut" class="pullright">0</span><br>$<span id="astronautCost">2,000</span></button> 
+	<div id="tooltip5"><p>An astronaut helps with all the space things.</p></div>
+	<button  id="5smallbox10" type="smallButton" onClick="buyTenAstronaut()"><span class="textSmall">Buy 10!</span>
+	<button  id="5smallbox100" type="smallButtons" onClick="buyHundredAstronaut()"><span class="textSmall">Buy 100!</span>
+	<button  id="5smallbox1000" type="smallButtons" onClick="buyThousandAstronaut()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox6" type="fix" onClick="buyCart()"><span class="text">Buy a Cart! </span><span id="cart" class="pullright">0</span><br>$<span id="cartCost">100</span></button>
+	<div id="tooltip6"><p>You need a cart to run a pizza cart duh.</p></div>
+
+	<button id="mybox7" type="fix" onClick="buyVan()"><span class="text">Buy a Van! </span><span id="van" class="pullright">0</span><br>$<span id="vanCost">300</span></button> 
+	<div id="tooltip7"><p>Can't run a pizza van without a van.</p></div>
+
+	<button id="mybox8" type="fix" onClick="buyParlour()"><span class="text">Buy a Parlour! </span><span id="parlour" class="pullright">0</span><br>$<span id="parlourCost">1,200</span></button>
+	<div id="tooltip8"><p>Try opening a parlour with no parlour.</p></div>
+
+	<button id="mybox9" type="fix" onClick="buyRestaurant()"><span class="text">Buy a Restaurant! </span><span id="restaurant" class="pullright">0</span><br>$<span id="restaurantCost">6,000</span></button> 
+	<div id="tooltip9"><p>It helps to have a restaurant when running a pizza restaurant.</p></div>
+
+	<button id="mybox10" type="fix" onClick="buyPalace()"><span class="text">Buy a Palace! </span><span id="palace" class="pullright">0</span><br>$<span id="palaceCost">30,000</span></button>
+	<div id="tooltip10"><p>Not an actual palace, it's a clever name for a fast food place. God.</p></div>
+
+	<button id="mybox11" type="fix" onClick="buyFactory()"><span class="text">Buy a Factory! </span><span id="factory" class="pullright">0</span><br>$<span id="factoryCost">130,000</span></button> 
+	<div id="tooltip11"><p>How can you make a pizza factory without a factory?</p></div>
+
+	<button id="mybox12" type="fix" onClick="buyConverter()"><span class="text">Buy a Converter! </span><span id="converter" class="pullright">0</span><br>$<span id="converterCost">500,000</span></button> 
+	<div id="tooltip12"><p>Guys lets make a pizza converter.</p></div>
+
+	<button id="mybox17" type="fix" onClick="buyScrapMetal()"><span class="text">Buy Scrap Metal! </span><span id="scrapMetal" class="pullright">0</span><br>$<span id="scrapMetalCost">10,000</span></button>
+	<div id="tooltip17"><p>Scrap metal is used for machines and above.</p></div>
+	<button id="6smallbox10" type="smallButton" onClick="buyTenScrapMetal()"><span class="textSmall">Buy 10!</span>
+	<button id="6smallbox100" type="smallButtons" onClick="buyHundredScrapMetal()"><span class="textSmall">Buy 100!</span>
+	<button id="6smallbox1000" type="smallButtons" onClick="buyThousandScrapMetal()"><span class="textSmall">Buy 1000!</span>
+
+	<button id="mybox13" type="fix" onClick="buyWeatherMachine()"><span class="text">Buy a Weather Machine! </span><span id="weatherMachine" class="pullright">0</span><br>$<span id="weatherMachineCost">8,000,000</span></button> 
+	<div id="tooltip13"><p>Shall we build a pizza weather machine?</p></div>
+
+	<button id="mybox14" type="fix" onClick="buySuperDrill()"><span class="text">Buy a Super Drill! </span><span id="superDrill" class="pullright">0</span><br>$<span id="superDrillCost">100,000,000</span></button></span>
+	<div id="tooltip14"><p>You'll need one of these for a pizza super drill</p></div>
+
+	<button id="mybox15" type="fix" onClick="buySpaceElevator()"><span class="text">Buy a Space Elevator! </span><span id="spaceElevator" class="pullright">0</span><br>$<span id="spaceElevatorCost">200,000,000</span></button>
+	<div id="tooltip15"><p>You can't get to the moon without an elevator.</p></div>
+
+	<button id="mybox16" type="fix" onClick="buyMoonBase()"><span class="text">Buy a Moon Base! </span><span id="moonBase" class="pullright">0</span><br>$<span id="moonBaseCost">500,000,000</span></button>
+	<div id="tooltip16"><p>Why the hell do you need a moon base for pizzas?</p></div>
+
+	&nbsp
+
+	<h1 class="textmiddle">Upgrades</h1>
+
+	<button id="mybox44" type="fix" onClick="buyAutoClicker(); pizzaPerSecond()"><span class="text">Autoclicker</span><span id="autoClicker" class="pullright">0</span><br>$<span id="autoClickerCost">500</span></button>
+	<div id="tooltip44"><p>Who even has time for clicking? Urgh.<br><br>An autoclicker that clicks 5 times a second</p></div>
+
+	<button id="mybox41" type="fix" onClick="buyConvenienceUpgrade(); pizzaPerSecond()"><span class="text">Convenient Clicking</span><span id="convenienceBought" class="pullright">0</span><br>$<span id="convenienceCost">10,000</span></button>
+	<div id="tooltip41"><p>You're lucky I'm a generous God.<br><br>Unlock +10, +100, and +1000 Buttons for a few resources.</p></div>
+
+	<button id="mybox42" type="fix" onClick="buyConvenience2Upgrade(); pizzaPerSecond()"><span class="text">Lazy Clicking</span><span id="convenience2Bought" class="pullright">0</span><br>$<span id="convenience2Cost">100,000</span></button>
+	<div id="tooltip42"><p>Please Sir, may I have some more?<br><br>Unlock +10, +100, and +1000 Buttons for a few more resources.</p></div>
+
+	<button id="mybox43" type="fix" onClick="buyConvenience3Upgrade(); pizzaPerSecond()"><span class="text">Pinnacle of Laziness</span><span id="convenience3Bought" class="pullright">0</span><br>$<span id="convenience3Cost">100,000,000</span></button>
+	<div id="tooltip43"><p>$100,000,000 to click a button 5 times. Worth.<br><br>Unlock +10, +100, and +1000 Buttons for that last stupid resource you need.</p></div>
+
+	<button id="mybox33" type="fix" onClick="buyClickUpgrade(); pizzaPerSecond()"><span class="text">Use 2 Hands!</span><span id="clickUpgradeBought" class="pullright">0</span><br>$<span id="clickUpgradeCost">50,000</span></button>
+	<div id="tooltip33"><p>Hey Hey Hey ;)<br><br>Your pizza per second is doubled, including your click.</p></div>
+
+	<button id="mybox34" type="fix" onClick="buyThirdUpgrade(); pizzaPerSecond()"><span class="text">Use Your Legs!</span><span id="upgradeThirdBought" class="pullright">0</span><br>$<span id="upgradeThirdCost">25,000,000</span></button> 
+	<div id="tooltip34"><p>Wait, what?<br><br>Your pizza per second is doubled again, including your click again.</p></div>
+
+	<button id="mybox35" type="fix" onClick="buyCloneUpgrade(); pizzaPerSecond()"><span class="text">Grow a Clone!</span><span id="upgradeCloneBought" class="pullright">0</span><br>$<span id="upgradeCloneCost">200,000,000</span></button> 
+	<div id="tooltip35"><p>Are you thinking what I'm thinking...<br><br>Your pizza per second is doubled again again, including your click again again.</p></div>
+
+	<button id="mybox36" type="fix" onClick="buyBodyUpgrade(); pizzaPerSecond()"><span class="text">Body Modification</span><span id="upgradeBodyBought" class="pullright">0</span><br>$<span id="upgradeBodyCost">500,000,000</span></button> 
+	<div id="tooltip36"><p>Dear Diary... Jackpot.<br><br>Your pizza per second is doubled again again again, including your click again again again.</p></div>
+
+	<button id="mybox37" type="fix" onClick="buyUpgradePepperoni()"><span class="text">Chuck on some pepperoni!</span><span id="upgradePepperoniBought" class="pullright">0</span><br>$<span id="upgradePepperoniCost">2,000,000</span></button>
+	<div id="tooltip37"><p>What a nice and simple pizza.<br><br>Pizza can now be sold for $2.</p></div>
+
+	<button id="mybox38" type="fix" onClick="buyUpgradeChicken()"><span class="text">Toss on some chicken!</span><span id="upgradeChickenBought" class="pullright">0</span><br>$<span id="upgradeChickenCost">500,000,000</span></button> 
+	<div id="tooltip38"><p>Adding some chicken, I like it.<br><br>Pizza can now be sold for $3</p></div>
+
+	<button id="mybox39" type="fix" onClick="buyUpgradeBeef()"><span class="text">Fling on some ground beef!</span><span id="upgradeBeefBought" class="pullright">0</span><br>$<span id="upgradeBeefCost">1,000,000,000</span></button> 
+	<div id="tooltip39"><p>I take it you're not a vegetarian?<br><br>Pizza can now be sold for $4</p></div>
+
+	<button id="mybox40" type="fix" onClick="buyUpgradeSausage()"><span class="text">Bang on some sausage!</span><span id="upgradeSausageBought" class="pullright">0</span><br>$<span id="upgradeSausageCost">10,000,000,000</span></button> 
+	<div id="tooltip40"><p>Going for the mighty meat feast then.<br><br>Pizza can now be sold for $5</p></div>
+
+	<!-- Quests -->
+	<h1 class="textmiddle">Quests <span id="questsDone">0</span>/81</h1>
+
+	<div class="achivs-row">
+	<span id="mybox101" class="achivs"><span id="questOne">!</span></span>
+	<div id="tooltip101"><p>Pizza Apprentice<br><br>Make 10 Pizzas.<br><br>Reward = 1 Pizza.</p></div>
+	<span id="mybox102" class="achivs"><span id="questTwo">!</span></span>
+	<div id="tooltip102"><p>Pizza Rookie<br><br>Make 100 Pizzas.<br><br>Reward = 10 Pizzas.</p></div>
+	<span id="mybox103" class="achivs"><span id="questThree">!</span></span>
+	<div id="tooltip103"><p>Pizza Beginner<br><br>Make 1,000 Pizzas.<br><br>Reward = 100 Pizzas.</p></div>
+	<span id="mybox104" class="achivs"><span id="questFour">!</span></span>
+	<div id="tooltip104"><p>Pizza Amateur<br><br>Make 10,000 Pizzas.<br><br>Reward = 1,000 Pizzas.</p></div>
+	<span id="mybox105" class="achivs"><span id="questFive">!</span></span>
+	<div id="tooltip105"><p>Pizza Student<br><br>Make 100,000 Pizzas.<br><br>Reward = 10,000 Pizzas.</p></div>
+	<span id="mybox106" class="achivs"><span id="questSix">!</span></span>
+	<div id="tooltip106"><p>Pizza Expert<br><br>Make 1,000,000 Pizzas.<br><br>Reward = 100,000 Pizzas.</p></div>
+	<span id="mybox107" class="achivs"><span id="questSeven">!</span></span>
+	<div id="tooltip107"><p>Pizza Master<br><br>Make 10,000,000 Pizzas.<br><br>Reward = 1,000,000 Pizzas.</p></div>
+	<span id="mybox108" class="achivs"><span id="questEight">!</span></span>
+	<div id="tooltip108"><p>Pizza Commander<br><br>Make 100,000,000 Pizzas.<br><br>Reward = 10,000,000 Pizzas.</p></div>
+	<span id="mybox109" class="achivs"><span id="questNine">!</span></span>
+	<div id="tooltip109"><p>Pizza Champion<br><br>Make 1,000,000,000 Pizzas.<br><br>Reward = 100,000,000 Pizzas.</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox110" class="achivs"><span id="questTen">!</span></span>
+	<div id="tooltip110"><p>Pizza Deity<br><br>Make 10,000,000,000 Pizzas.<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox111" class="achivs"><span id="questEleven">!</span></span>
+	<div id="tooltip111"><p>Pizza Demigod<br><br>Make 100,000,000,000 Pizzas.<br><br>Reward = 10,000,000,000 Pizzas.</p></div>
+	<span id="mybox112" class="achivs"><span id="questTwelve">!</span></span>
+	<div id="tooltip112"><p>God of Pizza<br><br>Make 1,000,000,000,000 Pizzas.<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox113" class="achivs"><span id="questThirteen">!</span></span>
+	<div id="tooltip113"><p>A Helping Hand<br><br>Hire a Worker<br><br>Reward = 5 Pizzas.</p></div>
+	<span id="mybox114" class="achivs"><span id="questFourteen">!</span></span>
+	<div id="tooltip114"><p>Helping Hands<br><br>Hire 10 Workers<br><br>Reward = 500 Pizzas.</p></div>
+	<span id="mybox115" class="achivs"><span id="questFifteen">!</span></span>
+	<div id="tooltip115"><p>We Need More!<br><br>Hire 50 Workers<br><br>Reward = 10,000 Pizzas.</p></div>
+	<span id="mybox116" class="achivs"><span id="questSixteen">!</span></span>
+	<div id="tooltip116"><p>MORE!!!<br><br>Hire 100 Workers<br><br>Reward = 50,000 Pizzas.</p></div>
+	<span id="mybox117" class="achivs"><span id="questSeventeen">!</span></span>
+	<div id="tooltip117"><p>That'll do pig<br><br>Hire 200 Workers<br><br>Reward = 500,000 Pizzas.</p></div>
+	<span id="mybox118" class="achivs"><span id="questEighteen">!</span></span>
+	<div id="tooltip118"><p>God of Workers<br><br>Hire 400 Workers<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox119" class="achivs"><span id="questNineteen">!</span></span>
+	<div id="tooltip119"><p>Piggy Back Cart<br><br>Hire a Pizza Cart<br><br>Reward = 20 Pizzas.</p></div>
+	<span id="mybox120" class="achivs"><span id="questTwenty">!</span></span>
+	<div id="tooltip120"><p>Space Hopper Carts<br><br>Hire 10 Pizza Carts<br><br>Reward = 2,000 Pizzas.</p></div>
+	<span id="mybox121" class="achivs"><span id="questTwentyone">!</span></span>
+	<div id="tooltip121"><p>Horsey Carts<br><br>Hire 50 Pizza Carts<br><br>Reward = 25,000 Pizzas.</p></div>
+	<span id="mybox122" class="achivs"><span id="questTwentytwo">!</span></span>
+	<div id="tooltip122"><p>BMW Carts<br><br>Hire 100 Pizza Carts<br><br>Reward = 200,000 Pizzas.</p></div>
+	<span id="mybox123" class="achivs"><span id="questTwentythree">!</span></span>
+	<div id="tooltip123"><p>Ferrari Carts<br><br>Hire 200 Pizza Carts<br><br>Reward = 1,000,000 Pizzas.</p></div>
+	<span id="mybox124" class="achivs"><span id="questTwentyfour">!</span></span>
+	<div id="tooltip124"><p>God of Carts<br><br>Hire 350 Pizza Carts<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox125" class="achivs"><span id="questTwentyfive">!</span></span>
+	<div id="tooltip125"><p>Pedo Van<br><br>Hire a Pizza Van<br><br>Reward = 50 Pizzas.</p></div>
+	<span id="mybox126" class="achivs"><span id="questTwentysix">!</span></span>
+	<div id="tooltip126"><p>Ice Cream Vans<br><br>Hire 10 Pizza Vans<br><br>Reward = 5,000 Pizzas.</p></div>
+	<span id="mybox127" class="achivs"><span id="questTwentyseven">!</span></span>
+	<div id="tooltip127"><p>Hippy Vans<br><br>Hire 50 Pizza Vans<br><br>Reward = 25,000 Pizzas.</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox128" class="achivs"><span id="questTwentyeight">!</span></span>
+	<div id="tooltip128"><p>Scooby Vans<br><br>Hire 100 Pizza Vans<br><br>Reward = 125,000 Pizzas.</p></div>
+	<span id="mybox129" class="achivs"><span id="questTwentynine">!</span></span>
+	<div id="tooltip129"><p>Optimus Prime Vans<br><br>Hire 200 Pizza Vans<br><br>Reward = 1,000,000 Pizzas.</p></div>
+	<span id="mybox130" class="achivs"><span id="questThirty">!</span></span>
+	<div id="tooltip130"><p>God of Vans<br><br>Hire 325 Pizza Vans<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox131" class="achivs"><span id="questThirtyone">!</span></span>
+	<div id="tooltip131"><p>Garibaldi's<br><br>Open a Pizza Parlour<br><br>Reward = 150 Pizzas.</p></div>
+	<span id="mybox132" class="achivs"><span id="questThirtytwo">!</span></span>
+	<div id="tooltip132"><p>Beats Pizza Express<br><br>Open 10 Pizza Parlours<br><br>Reward = 5,000 Pizzas.</p></div>
+	<span id="mybox133" class="achivs"><span id="questThirtythree">!</span></span>
+	<div id="tooltip133"><p>Pizza Starbucks<br><br>Open 50 Pizza Parlours<br><br>Reward = 100,000 Pizzas.</p></div>
+	<span id="mybox134" class="achivs"><span id="questThirtyfour">!</span></span>
+	<div id="tooltip134"><p>Better Than Pizza Hut<br><br>Open 100 Pizza Parlours<br><br>Reward = 500,000 Pizzas.</p></div>
+	<span id="mybox135" class="achivs"><span id="questThirtyfive">!</span></span>
+	<div id="tooltip135"><p>Who Needs Dominos?<br><br>Open 200 Pizza Parlours<br><br>Reward = 1,500,000 Pizzas.</p></div>
+	<span id="mybox136" class="achivs"><span id="questThirtysix">!</span></span>
+	<div id="tooltip136"><p>God of Parlours<br><br>Open 300 Pizza Parlours<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox137" class="achivs"><span id="questThirtyseven">!</span></span>
+	<div id="tooltip137"><p>"Delicious" - IGN (1/5 Stars)<br><br>Open a Pizza Restaurant<br><br>Reward = 500 Pizzas.</p></div>
+	<span id="mybox138" class="achivs"><span id="questThirtyeight">!</span></span>
+	<div id="tooltip138"><p>"Couldn't Taste The Freedom" - Obama (2/5 Stars)<br><br>Open 10 Pizza Restaurants<br><br>Reward = 10,000 Pizzas.</p></div>
+	<span id="mybox139" class="achivs"><span id="questThirtynine">!</span></span>
+	<div id="tooltip139"><p>"Ok" - Rammus (3/5 Stars)<br><br>Open 50 Pizza Restaurants<br><br>Reward = 300,000 Pizzas.</p></div>
+	<span id="mybox140" class="achivs"><span id="questFourty">!</span></span>
+	<div id="tooltip140"><p>"Fucking Shit" - Gordon Ramsay (4/5 Stars)<br><br>Open 100 Pizza Restaurants<br><br>Reward = 1,200,000 Pizzas.</p></div>
+	<span id="mybox141" class="achivs"><span id="questFourtyone">!</span></span>
+	<div id="tooltip141"><p>"The Corgis Found It Exquisite" - Her Majesty the Queen (5/5 Stars)<br><br>Open 200 Pizza Restaurants<br><br>Reward = 2,500,000 Pizzas.</p></div>
+	<span id="mybox142" class="achivs"><span id="questFourtytwo">!</span></span>
+	<div id="tooltip142"><p>God of Restaurants<br><br>Open 275 Pizza Restaurants<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox143" class="achivs"><span id="questFourtythree">!</span></span>
+	<div id="tooltip143"><p>Willy Wonkas Chocolate Palace<br><br>Open a Pizza Palace<br><br>Reward = 1,000 Pizzas.</p></div>
+	<span id="mybox144" class="achivs"><span id="questFourtyfour">!</span></span>
+	<div id="tooltip144"><p>Taj Mahal<br><br>Open 10 Pizza Palaces<br><br>Reward = 20,000 Pizzas.</p></div>
+	<span id="mybox145" class="achivs"><span id="questFourtyfive">!</span></span>
+	<div id="tooltip145"><p>Palace of Versailles<br><br>Open 50 Pizza Palaces<br><br>Reward = 500,000</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox146" class="achivs"><span id="questFourtysix">!</span></span>
+	<div id="tooltip146"><p>Schonbrunn Palace<br><br>Open 100 Pizza Palaces<br><br>Reward = 2,000,000 Pizzas.</p></div>
+	<span id="mybox147" class="achivs"><span id="questFourtseven">!</span></span>
+	<div id="tooltip147"><p>Buckingham Palace<br><br>Open 200 Pizza Palaces<br><br>Reward = 5,000,000 Pizzas.</p></div>
+	<span id="mybox148" class="achivs"><span id="questFourteight">!</span></span>
+	<div id="tooltip148"><p>"God of Palaces<br><br>Open 250 Pizza Palaces<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox149" class="achivs"><span id="questFourtynine">!</span></span>
+	<div id="tooltip149"><p>Sweat Shop<br><br>Open a Pizza Factory<br><br>Reward = 20,000 Pizzas.</p></div>
+	<span id="mybox150" class="achivs"><span id="questFifty">!</span></span>
+	<div id="tooltip150"><p>Coal Plant<br><br>Open 10 Pizza Factories<br><br>Reward = 200,000 Pizzas.</p></div>
+	<span id="mybox151" class="achivs"><span id="questFiftyone">!</span></span>
+	<div id="tooltip151"><p>Nuclear Power<br><br>Open 50 Pizza Factories<br><br>Reward = 3,000,000 Pizzas.</p></div>
+	<span id="mybox152" class="achivs"><span id="questFiftytwo">!</span></span>
+	<div id="tooltip152"><p>Leftover Pizza Fuel<br><br>Open 100 Pizza Factories<br><br>Reward = 10,000,000 Pizzas.</p></div>
+	<span id="mybox153" class="achivs"><span id="questFiftythree">!</span></span>
+	<div id="tooltip153"><p>Practically Nike<br><br>Open 200 Pizza Factories<br><br>Reward = 50,000,000 Pizzas.</p></div>
+	<span id="mybox154" class="achivs"><span id="questFiftyfour">!</span></span>
+	<div id="tooltip154"><p>God of Factories<br><br>Open 215 Pizza Factories<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox155" class="achivs"><span id="questFiftyfive">!</span></span>
+	<div id="tooltip155"><p>1 Human = 1 Pizza<br><br>Build a Pizza Converter<br><br>Reward = 75,000 Pizzas.</p></div>
+	<span id="mybox156" class="achivs"><span id="questFiftysix">!</span></span>
+	<div id="tooltip156"><p>7 Cats = 1 Pizza<br><br>Build 10 Pizza Converters<br><br>Reward = 750,000 Pizzas.</p></div>
+	<span id="mybox157" class="achivs"><span id="questFiftyseven">!</span></span>
+	<div id="tooltip157"><p>2 Seagulls = 1 Pizza<br><br>Build 50 Pizza Converters<br><br>Reward = 5,000,000 Pizzas.</p></div>
+	<span id="mybox158" class="achivs"><span id="questFiftyeight">!</span></span>
+	<div id="tooltip158"><p>9 Cactii = 1 Pizza<br><br>Build 100 Pizza Converters<br><br>Reward = 20,000,000 Pizzas.</p></div>
+	<span id="mybox159" class="achivs"><span id="questFiftynine">!</span></span>
+	<div id="tooltip159"><p>1 Unicorn Horn = 1 Pizza<br><br>Build 150 Pizza Converters<br><br>Reward = 100,000,000 Pizzas.</p></div>
+	<span id="mybox160" class="achivs"><span id="questSixty">!</span></span>
+	<div id="tooltip160"><p>God of Converters<br><br>Build 190 Pizza Converters<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox161" class="achivs"><span id="questSixtyone">!</span></span>
+	<div id="tooltip161"><p>Cloudy with a Chance of Pizza<br><br>Build a Pizza Weather Machine<br><br>Reward = 1,000,000 Pizzas.</p></div>
+	<span id="mybox162" class="achivs"><span id="questSixtytwo">!</span></span>
+	<div id="tooltip162"><p>Frozen Mini Pizzas From Above<br><br>Build 10 Pizza Weather Machines<br><br>Reward = 25,000,000 Pizzas.</p></div>
+	<span id="mybox163" class="achivs"><span id="questSixtythree">!</span></span>
+	<div id="tooltip163"><p>Mother Nature Approves<br><br>Build 50 Pizza Weather Machines<br><br>Reward = 50,000,000 Pizzas.</p></div>
+	</div>
+
+	<div class="achivs-row">
+	<span id="mybox164" class="achivs"><span id="questSixtyfour">!</span></span>
+	<div id="tooltip164"><p>Today Will Include Pizza with More Pizza<br><br>Build 100 Pizza Weather Machines<br><br>Reward = 500,000,000 Pizzas.</p></div>
+	<span id="mybox165" class="achivs"><span id="questSixtyfive">!</span></span>
+	<div id="tooltip165"><p>God of Weather Machines<br><br>Build 120 Pizza Weather Machines<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox166" class="achivs"><span id="questSixtysix">!</span></span>
+	<div id="tooltip166"><p>Hand Drill<br><br>Build a Pizza Super Drill<br><br>Reward = 50,000,000 Pizzas.</p></div>
+	<span id="mybox167" class="achivs"><span id="questSixtyseven">!</span></span>
+	<div id="tooltip167"><p>Jackhammer<br><br>Build 10 Pizza Super Drills<br><br>Reward = 500,000,000 Pizzas.</p></div>
+	<span id="mybox168" class="achivs"><span id="questSixtyeight">!</span></span>
+	<div id="tooltip168"><p>Big Daddy Drill<br><br>Build 50 Pizza Super Drills<br><br>Reward = 10,000,000,000 Pizzas.</p></div>
+	<span id="mybox169" class="achivs"><span id="questSixtynine">!</span></span>
+	<div id="tooltip169"><p>God of Super Drills<br><br>Build 65 Pizza Super Drills<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	<span id="mybox170" class="achivs"><span id="questSeventy">!</span></span>
+	<div id="tooltip170"><p>Cracking Cheese Gromit<br><br>Build a Pizza Moon Base<br><br>Reward = 100,000,000 Pizzas.</p></div>
+	<span id="mybox171" class="achivs"><span id="questSeventyone">!</span></span>
+	<div id="tooltip171"><p>Day 94, Run Out of Crackers<br><br>Build 10 Pizza Moon Bases<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox172" class="achivs"><span id="questSeventytwo">!</span></span>
+	<div id="tooltip172"><p>God of Moon Bases<br><br>Build 50 Pizza Moon Bases<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	</div>	
+
+	<div class="achivs-row">
+	<span id="mybox173" class="achivs"><span id="questSeventythree">!</span></span>
+	<div id="tooltip173"><p>Slave Master<br><br>Buy 1,000,000 Slaves<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox174" class="achivs"><span id="questSeventyfour">!</span></span>
+	<div id="tooltip174"><p>Mr. Superman No Home<br><br>Buy 500,000 Cleaners<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox175" class="achivs"><span id="questquestSeventyfive">!</span></span>
+	<div id="tooltip175"><p>Ding Fries Are Done<br><br>Buy 300,000 Managers<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox176" class="achivs"><span id="questquestSeventysix">!</span></span>
+	<div id="tooltip176"><p>Hello Operator<br><br>Buy 300,000 Operators<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox177" class="achivs"><span id="questquestSeventyseven">!</span></span>
+	<div id="tooltip177"><p>Albit Einstein could. He's wicked smaht<br><br>Buy 300,000 Scientists<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox178" class="achivs"><span id="questquestSeventyeight">!</span></span>
+	<div id="tooltip178"><p>Lance Armstrong Would Be Proud<br><br>Buy 300,000 Astronauts<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox179" class="achivs"><span id="questSeventynine">!</span></span>
+	<div id="tooltip179"><p>Iron Giant<br><br>Buy 500,000 Scrap Metal<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox180" class="achivs"><span id="questEighty">!</span></span>
+	<div id="tooltip180"><p>Bet You Can't Score 10<br><br>Find the Secret Game<br><br>Reward = 1,000,000,000 Pizzas.</p></div>
+	<span id="mybox181" class="achivs"><span id="questEightyone">!</span></span>
+	<div id="tooltip181"><p>What A Complete Waste Of Time<br><br>Complete all the quests<br><br>Reward = 100,000,000,000 Pizzas.</p></div>
+	</div>		
+
+	<!-- Options -->
+	<h1 class="textmiddle">Options</h1>
+
+	<p><button type="options" onclick="saveGame()">Save</button> Save the game at this exact moment</p>
+    <p><button type="options" onclick="loadGame()">Load</button> Load the game to your latest save</p>
+    <p><button type="options" onclick="deleteGame()">Delete</button> Start from the total beginning</p>
+
+    <!-- End of Options -->
+
+    <!-- Statistics -->
+	<h1 class="textmiddle">Stats</h1>
+
+	<p class="stats">Pizzas made: <span id="totalPizza">0</span> </span></p>
+	<p class="stats">Pizzas from Quests: <span id="totalPizzaQuests">0</span> </span></p>
+	<p class="stats">Slaves bought: <span id="totalSlave">0</span> </span></p>
+	<p class="stats">Cleaners bought: <span id="totalCleaner">0</span></span></p>
+	<p class="stats">Managers bought: <span id="totalManager">0</span></span></p>
+	<p class="stats">Operators bought: <span id="totalOperator">0</span></span></p>
+	<p class="stats">Scientists bought: <span id="totalScientist">0</span></span></p>
+	<p class="stats">Astronauts bought: <span id="totalAstronaut">0</span></span></p>
+	<p class="stats">Carts bought: <span id="totalCart">0</span></span></p>
+	<p class="stats">Vans bought: <span id="totalVan">0</span></span></p>
+	<p class="stats">Parlours bought: <span id="totalParlour">0</span></span></p>
+	<p class="stats">Restaurants bought: <span id="totalRestaurant">0</span></span></p>
+	<p class="stats">Palaces bought: <span id="totalPalace">0</span></span></p>
+	<p class="stats">Factories bought: <span id="totalFactory">0</span></span></p>
+	<p class="stats">Converters bought: <span id="totalConverter">0</span></span></p>
+	<p class="stats">Weather Machines bought: <span id="totalWeatherMachine">0</span></span></p>
+	<p class="stats">Scrap Metal bought: <span id="totalScrapMetal">0</span></span></p>
+	<p class="stats">Super Drills bought: <span id="totalSuperDrill">0</span> 
+	<p class="stats">Moon Bases bought: <span id="totalMoonBase">0</span></span></p>
+	<p class="stats">Space Elevators bought: <span id="totalSpaceElevator">0</span></span></p>
+
+	<!-- End of Statistics -->
+
+	<div id="sloppy"></div> <!-- Fixes height issue / scroll issue -->
+
+</div> <!-- End of Middle -->
+<div id="rightdivider"></div> <!-- Right Divider -->
+
+<div class="scrollable" id="right"> <!-- Right Scroll Bar -->
+
+	<h1 class="textmiddle"> Pizza Makers </h1> 
+
+	<!--Workers-->
+	<button id="mybox18" type="button" onClick="buyWorker(); pizzaPerSecond()"><span class="text">Hire a Worker! </span><span id="worker" class="pullright">0</span> <br>$<span id="workerCost">50</span></button>
+	<div id="tooltip18"><p>A worker that makes pizzas for you. Lazy. <br><br> Cost = $<span id="workerCostTT">50</span><br><br>Pizzas Per Second = 0.5</p></div>
+
+	<!--Pizza Carts-->
+	<button id="mybox19" type="button" onClick="buyPizzaCart(); pizzaPerSecond()"><span class="text">Hire a Pizza Cart! </span><span id="pizzaCart" class="pullright">0</span><br>$<span id="pizzaCartCost">200 </span> + <span id="pizzaCartCostSlave">  1  </span>+<span id="pizzaCartCostCart"> 1 </span></button>
+	<div id="tooltip19"><p>A pizza cart that wanders the streets making pizza. <br><br> Cost = $<span id="pizzaCartCostTT">200</span>, 1 Slave, 1 Cart.<br><br>Pizzas Per Second = 2</p></div>
+
+	<!--Pizza Vans-->
+	<button id="mybox20" type="button" onClick="buyPizzaVan(); pizzaPerSecond()"><span class="text">Hire a Pizza Van! </span><span id="pizzaVan" class="pullright">0</span><br>$<span id="pizzaVanCost">500 </span> + <span id="pizzaVanCostSlave"> 2 </span>+<span id="pizzaVanCostVan"> 1 </span></button> 
+	<div id="tooltip20"><p>A pizza van that drives around making pizza. <br><br> Cost = $<span id="pizzaVanCostTT">500</span>, 2 Slaves, 1 Van.<br><br>Pizzas Per Second = 6</p></div>
+	
+	<!--Pizza Parlours-->
+	<button id="mybox21" type="button" onClick="buyPizzaParlour(); pizzaPerSecond()"><span class="text">Open a Pizza Parlour! </span><span id="pizzaParlour" class="pullright">0</span><br>$<span id="pizzaParlourCost">2,000 </span> + <span id="pizzaParlourCostSlave"> 3 </span>+<span id="pizzaParlourCostCleaner"> 1 </span>+<span id="pizzaParlourCostManager"> 1 </span>+<span id="pizzaParlourCostParlour"> 1 </span></button>
+	<div id="tooltip21"><p>A pizza parlour makes pizza indoors. <br><br> Cost = $<span id="pizzaParlourCostTT">2,000</span>, 3 Slaves, 1 Cleaner, 1 Manager, 1 Parlour.<br><br>Pizzas Per Second = 20</p></div>
+
+	<!--Pizza Restaurants-->
+	<button id="mybox22" type="button" onClick="buyPizzaRestaurant(); pizzaPerSecond()"><span class="text">Open a Pizza Restaurant! </span><span id="pizzaRestaurant" class="pullright">0</span><br>$<span id="pizzaRestaurantCost">10,000 </span> + <span id="pizzaRestaurantCostSlave"> 8 </span>+<span id="pizzaRestaurantCostCleaner"> 2 </span>+<span id="pizzaRestaurantCostManager"> 1 </span>+<span id="pizzaRestaurantCostRestaurant"> 1 </span></button> 
+	<div id="tooltip22"><p>A pizza restaurant where only the highest quality of pizza is made. Quite. <br><br> Cost = $<span id="pizzaRestaurantCostTT">10,000</span>, 8 Slaves, 2 Cleaners, 1 Manager, 1 Restaurant.<br><br>Pizzas Per Second = 60</p></div>
+
+	<!--Pizza Palaces-->
+	<button id="mybox23" type="button" onClick="buyPizzaPalace(); pizzaPerSecond()"><span class="text">Open a Pizza Palace! </span><span id="pizzaPalace" class="pullright">0</span><br>$<span id="pizzaPalaceCost">50,000 </span> + <span id="pizzaPalaceCostSlave"> 16 </span>+<span id="pizzaPalaceCostCleaner"> 4 </span>+<span id="pizzaPalaceCostManager"> 2 </span>+<span id="pizzaPalaceCostPalace"> 1 </span></button> 
+	<div id="tooltip23"><p>A pizza palace makes fast deliverable pizzas (Not a palace made of pizza that makes pizza...). <br><br> Cost = $<span id="pizzaPalaceCostTT">50,000</span>, 16 Slaves, 4 Cleaners, 2 Managers, 1 Palace.<br><br>Pizzas Per Second = 180</p></div>
+
+	<!--Pizza Factories-->
+	<button id="mybox24" type="button" onClick="buyPizzaFactory(); pizzaPerSecond()"><span class="text">Open a Pizza Factory! </span><span id="pizzaFactory" class="pullright">0</span><br>$<span id="pizzaFactoryCost">200,000 </span> + <span id="pizzaFactoryCostSlave"> 32 </span>+<span id="pizzaFactoryCostCleaner"> 8 </span>+<span id="pizzaFactoryCostManager"> 4 </span>+<span id="pizzaFactoryCostFactory"> 1 </span></button> 
+	<div id="tooltip24"><p>A pizza factory mass produces pizzas. <br><br> Cost = $<span id="pizzaFactoryCostTT">200,000</span>, 32 Slaves, 8 Cleaners, 4 Managers, 1 Factory. <br><br>Pizzas Per Second = 400</p></div>
+	
+	<!--Pizza Converters-->
+	<button id="mybox25" type="button" onClick="buyPizzaConverter(); pizzaPerSecond()"><span class="text">Build a Pizza Converter! </span><span id="pizzaConverter" class="pullright">0</span><br>$<span id="pizzaConverterCost">1,000,000 </span> + <span id="pizzaConverterCostSlave"> 64 </span>+<span id="pizzaConverterCostCleaner"> 16 </span>+<span id="pizzaConverterCostOperator"> 8 </span>+<span id="pizzaConverterCostScientist"> 4 </span>+<span id="pizzaConverterCostScrapMetal"> 10 </span>+<span id="pizzaConverterCostConverter">1</span></button>
+	<div id="tooltip25"><p>A pizza converter converts ordinary objects into pizza. <br><br> Cost = $<span id="pizzaConverterCostTT">1,000,000</span>, 64 Slaves, 16 Cleaners, 8 Operators, 4 Scientists, 10 Scrap Metal, 1 Converter. <br><br>Pizzas Per Second = 10,000</p></div>
+
+	<!--Pizza Weather Machines-->
+	<button id="mybox26" type="button" onClick="buyPizzaWeatherMachine(); pizzaPerSecond()"><span class="text">Build a Pizza Weather Machine! </span><span id="pizzaWeatherMachine" class="pullright">0</span><br>$<span id="pizzaWeatherMachineCost">25,000,000 </span> + <span id="pizzaWeatherMachineCostSlave"> 128 </span>+<span id="pizzaWeatherMachineCostCleaner"> 32 </span>+<span id="pizzaWeatherMachineCostOperator"> 16 </span>+<span id="pizzaWeatherMachineCostScientist"> 8 </span>+<span id="pizzaWeatherMachineCostScrapMetal"> 20 </span>+<span id="pizzaWeatherMachineCostWeatherMachine"> 1 </span></button>
+	<div id="tooltip26"><p>A pizza weather machine makes it rain pizza 24/7. <br><br> Cost = $<span id="pizzaWeatherMachineCostTT">25,000,000</span>, 128 Slaves, 32 Cleaners, 16 Operators, 8 Scientists, 20 Scrap Metal, 1 Weather Machine. <br><br>Pizzas Per Second = 30,000</p></div>
+
+	<!--Pizza Super Drills-->
+	<button id="mybox27" type="button" onClick="buyPizzaSuperDrill(); pizzaPerSecond()"><span class="text">Build a Pizza Super Drill! </span><span id="pizzaSuperDrill" class="pullright">0</span><br>$<span id="pizzaSuperDrillCost">500,000,000 </span> + <span id="pizzaSuperDrillCostSlave"> 256 </span>+<span id="pizzaSuperDrillCostCleaner"> 64 </span>+<span id="pizzaSuperDrillCostOperator"> 32 </span>+<span id="pizzaSuperDrillCostScientist"> 16 </span>+<span id="pizzaSuperDrillCostScrapMetal"> 30 </span>+<span id="pizzaSuperDrillCostSuperDrill"> 1 </span></button>
+	<div id="tooltip27"><p>A super drill mines the earths core for tomato sauce to make the best pizzas. <br><br> Cost = $<span id="pizzaSuperDrillCostTT">500,000,000</span>, 256 Slaves, 64 Cleaners, 32 Operators, 16 Scientists, 30 Scrap Metal, 1 Super Drill. <br><br>Pizzas Per Second = 75,000</p></div>
+
+	<!--Pizza Moon Bases-->
+	<button id="mybox28" type="button" onClick="buyPizzaMoonBase(); pizzaPerSecond()"><span class="text">Build a Pizza Moon Base! </span><span id="pizzaMoonBase" class="pullright">0</span><br>$<span id="pizzaMoonBaseCost">1,000,000,000</span> + <span id="pizzaMoonBaseCostSlave"> 512 </span>+<span id="pizzaMoonBaseCostCleaner">1 28 </span>+<span id="pizzaMoonBaseCostOperator"> 64 </span>+<span id="pizzaMoonBaseCostScientist"> 32 </span>+<span id="pizzaMoonBaseCostAstronaut"> 16 </span>+<span id="pizzaMoonBaseCostScrapMetal"> 50 </span>+<span id="pizzaMoonBaseCostSpaceElevator"> 2 </span>+<span id="pizzaMoonBaseCostMoonBase"> 1 </span></button>
+	<div id="tooltip28"><p>A moon base collects the cheese from the moon and sprinkles it on pizza. <br><br> Cost = $<span id="pizzaMoonBaseCostTT">1,000,000,000</span>, 512 Slaves, 128 Cleaners, 64 Operators, 32 Scientists, 16 Astronauts, 50 Scrap Metal, 2 Space Elevators, 1 Moon Base. <br><br>Pizzas Per Second = 200,000</p></div>
+
+	<span id="spacetravel">
+
+	<h1 class="textmiddle"> Space Travel </h1>
+
+	<!-- Rocket Ship -->
+	<button id="mybox29" type="button" onClick="buyRocketShip()"><span class="text">Build a Rocket Ship!</span><span id="rocketShip" class="pullright">0</span><br>$<span id="rocketShipCost">100,000,000,000</span></button>
+	<div id="tooltip29"><p>A rocket ship that is fueled by pizzas to explore space. <br><br> Cost = $100,000,000,000</p></div>
+
+	<!--Supply a Crew -->
+	<button id="mybox31" type="button" onClick="buySupplyCrew()"><span class="text">Supply a Crew</span><span id="supplyCrew" class="pullright">0</span><br><span id="supplyCrewScientist">5,000 + </span><span id="supplyCrewAstronaut">5,000  </span></button>
+	<div id="tooltip31"><p>Supply a crew to undertake a historic expedition into space.<br><br>Cost = 5000 Astronauts, 5000 Scientists.</p></div>
+
+	<!--Donate Fuel -->
+	<button id="mybox30" type="button" onClick="buyDonateFuel()"><span class="text">Donate Fuel</span><span id="donateFuel" class="pullright">0</span><br><span id="donateFuelCost">100,000,000,000</span><span> Pizza</span></button>
+	<div id="tooltip30"><p>Donate your pizzas in order to advance our understanding of space. Your name will be remembered throughout history. <br><br> Cost = 100,000,000,000 Pizza</p></div>
+
+	<!-- Explore Space -->
+	<button id="mybox32" type="buttonspace" onClick="buyExploreSpace()"><span class="textspace">Explore the Solar System!</span></button>
+	<div id="tooltip32"><p>Take your crew and go and discover the untold wonders of our solar system.<br><br> Cost = 1 Rocket Ship, 1 Fuel, 1 Crew.</p></div>
+
+	</span> <!-- End of Space Travel -->
+
+	<div id="sloppy1"></div> <!-- Fixes height issue / scroll issue -->
+	
+
+</div> <!-- End of Right -->
+
+<script type="text/javascript" src="main.js"></script> <!-- Links to the JS file -->
+
+
+<!-- Google Analytics -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-49722075-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- End of Google Analytics -->
+
+</body>
+
+</html>
