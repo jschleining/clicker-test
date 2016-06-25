@@ -1,6 +1,9 @@
 angular.module('clickerApp')
 
 .constant('GameData', {
+  SETTINGS: {
+    baseClickValue: 1
+  },
   RESOURCES: [
     {
       id: 'rid-0001',

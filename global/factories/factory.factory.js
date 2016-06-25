@@ -12,11 +12,11 @@ angular.module('clickerApp')
     factory_.production = data.production;
     factory_.totalProduction = 0;
 
-    // testing events
-    factory_.unbindHandler = null;
-    factory_.eventCount = 0;
-    factory_.isWatchingEvent = false;
-    factory_.startWatchingEvent();
+    // // testing events
+    // factory_.unbindHandler = null;
+    // factory_.eventCount = 0;
+    // factory_.isWatchingEvent = false;
+    // factory_.startWatchingEvent();
   }
 
   // quantity should be 1 only until i write the multiple purchase code and can tell the user
@@ -28,29 +28,29 @@ angular.module('clickerApp')
     }
     this.totalProduction = this.production * this.owned;
 
-    console.log('updateQuantity Pings: ', this.eventCount);
+    // console.log('updateQuantity Pings: ', this.eventCount);
   }
 
-  Factory.prototype.toggleListener = function() {
-    this.unbindHandler ? this.stopWatchingEvent() : this.startWatchingEvent();
-  }
+  // Factory.prototype.toggleListener = function() {
+  //   this.unbindHandler ? this.stopWatchingEvent() : this.startWatchingEvent();
+  // }
 
-  Factory.prototype.handlePingEvent = function(event) {
-    this.eventCount++;
-    console.log('Pings: ', this.eventCount);
-  }
+  // Factory.prototype.handlePingEvent = function(event) {
+  //   this.eventCount++;
+  //   console.log('Pings: ', this.eventCount);
+  // }
 
-  Factory.prototype.startWatchingEvent = function() {
-    console.log('Started Listening');
-    this.unbindHandler = $rootScope.$on( "ping", this.handlePingEvent );
-    this.isWatchingEvent = true;
-  }
+  // Factory.prototype.startWatchingEvent = function() {
+  //   console.log('Started Listening');
+  //   this.unbindHandler = $rootScope.$on( "ping", this.handlePingEvent );
+  //   this.isWatchingEvent = true;
+  // }
 
-  Factory.prototype.stopWatchingEvent = function() {
-    this.unbindHandler();
-    this.unbindHandler = null;
-    this.isWatchingEvent = false;
-  }
+  // Factory.prototype.stopWatchingEvent = function() {
+  //   this.unbindHandler();
+  //   this.unbindHandler = null;
+  //   this.isWatchingEvent = false;
+  // }
 
   return {
     getFactory: function(data) {

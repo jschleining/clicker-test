@@ -1,8 +1,10 @@
 var gameApp = angular.module('gameApp', ['ui.router', 'ngMaterial']);
 
-gameApp.controller('GameController', ['$rootScope', '$interval', 'GameData', 'Resources', 'Factories', 
-		function GameController($rootScope, $interval, GameData, Resources, Factories) {
+gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'GameData', 'Storage', 'Resources', 'Factories', 
+		function GameController($rootScope, $scope, $interval, GameData, Storage, Resources, Factories) {
 	var vm_ = this;
+	vm_.storage = Storage;
+	vm_.saveData = Storage.saveData;
 	vm_.clickValue = 1;
 	vm_.widgets = 0;
 	vm_.wps = 0;
@@ -33,7 +35,7 @@ gameApp.controller('GameController', ['$rootScope', '$interval', 'GameData', 'Re
 
 		vm_.widgets += vm_.wps;
 
-		$rootScope.$broadcast( "ping" );
+		// $rootScope.$broadcast( "ping" );
 	}
 
 	function init_() {
@@ -65,7 +67,7 @@ gameApp.controller('GameController', ['$rootScope', '$interval', 'GameData', 'Re
 	}
 
 	function onClickTargetClick_() {
-		vm_.widgets += vm_.clickValue;
+		vm_.widgets += vm_.saveData.widgetsPerClick;
 	}
 
 	function buyResource_(index) {
@@ -81,6 +83,15 @@ gameApp.controller('GameController', ['$rootScope', '$interval', 'GameData', 'Re
 			vm_.factories[index].updateQuantity(1);
 		}
 	}
+
+	$scope.$watch(
+		function watchWidgets(scope) {
+			return (vm_.widgets);
+		},
+		function handleWidgetChange(newValue, oldValue) {
+			console.log('Widgets - old | new: ', oldValue, ' | ', newValue);
+		}
+	);
 
 	init_();
 }]);
