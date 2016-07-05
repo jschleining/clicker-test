@@ -1,0 +1,18 @@
+.generator{
+	background: #dddddd;
+	border:1px solid black;
+}
+
+.upgrade{
+	background: #ccccff;
+	border:1px solid blue;
+}
+
+.achievement{
+	background: #ccffcc;
+	border:1px solid green;
+}
+
+.md-sign, .md-thumb-text{
+	display:none;
+}

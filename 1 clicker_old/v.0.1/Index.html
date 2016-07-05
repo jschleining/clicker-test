@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>Clicker Test</title>
+	  <link rel="stylesheet" href="css/main.css">
+
+	</head>
+
+	<body>
+		<div id="title">title</div>
+		
+		<hr />
+		
+		<div id="timer" class="container">
+			<div>Time Elapsed: <span id="elapsed_time">0</span> seconds</div>
+		</div>
+		
+		<hr />
+		
+		<div id="clickables" class="container">
+			<button id="clicker" type="button">Click Me</button>
+			<hr />
+			<div>Clicks: <span id="current_clicks">0</span></div>
+			<div>Clicks Per Second: <span id="cps">0</span></div>
+		</div>
+		
+		<hr />
+		
+		<div id="generators" class="container">
+			<div id="gen_0">
+				<button id="gen_0_btn" class="generator" type="button">Generator 1</button>
+				<div><span class="label">Cost: </span><span id="gen_0_cost">10</span></div>
+				<div><span class="label">Per Sec: </span><span id="gen_0_persec">1</span></div>
+				<div><span class="label">Owned: </span><span id="gen_0_owned">0</span></div>
+			</div>
+			
+			<div id="gen_1">
+				<button id="gen_1_btn" class="generator" type="button">Generator 2</button>
+				<div><span class="label">Cost: </span><span id="gen_1_cost">10</span></div>
+				<div><span class="label">Per Sec: </span><span id="gen_1_persec">1</span></div>
+				<div><span class="label">Owned: </span><span id="gen_1_owned">0</span></div>
+			</div>
+			
+			<div id="gen_2">
+				<button id="gen_2_btn" class="generator" type="button">Generator 3</button>
+				<div><span class="label">Cost: </span><span id="gen_2_cost">10</span></div>
+				<div><span class="label">Per Sec: </span><span id="gen_2_persec">1</span></div>
+				<div><span class="label">Owned: </span><span id="gen_2_owned">0</span></div>
+			</div>
+		</div>
+		
+		<hr />
+		
+		<div id="upgrades" class="container">
+			<div id="upg_0">
+				<button id="upg_0_btn" class="upgrade" type="button">Upgrade 1</button>
+				<div><span class="label">Description: </span><span id="upg_0_desc">Description</span></div>
+				<div><span class="label">Cost: </span><span id="upg_0_cost">100</span></div>
+			</div>
+			
+			<div id="upg_1">
+				<button id="upg_1_btn" class="upgrade" type="button">Upgrade 2</button>
+				<div><span class="label">Description: </span><span id="upg_1_desc">Description</span></div>
+				<div><span class="label">Cost: </span><span id="upg_1_cost">100</span></div>
+			</div>
+			
+			<div id="upg_2">
+				<button id="upg_2_btn" class="upgrade" type="button">Upgrade 3</button>
+				<div><span class="label">Description: </span><span id="upg_2_desc">Description</span></div>
+				<div><span class="label">Cost: </span><span id="upg_2_cost">100</span></div>
+			</div>
+		</div>
+		
+		<hr />
+		
+		<div id="footer"><h4>footer</h4></div>
+		
+		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="js/utility.js" defer></script>
+		<script type="text/javascript" src="js/ui.js" defer></script>
+		<script type="text/javascript" src="js/main.js" defer></script>
+	</body>
+	
+</html>

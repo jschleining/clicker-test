@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Progress Quest</title>
+		<link rel="stylesheet" href="jquery-ui.min.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+
+	<body>
+		<!-- v.01: Hard Coded Vales, Basic Information -->
+		<!-- v.02: Save/Load -->
+		<!-- v.03: XML -->
+		
+		<div id="title">title</div>
+		<hr />
+		
+		<div id="attributes" class="container">
+			<div id="att_0"><span class="label"></span><span class="value"></span></div>
+			<div id="att_1"><span class="label"></span><span class="value"></span></div>
+			<div id="att_2"><span class="label"></span><span class="value"></span></div>
+			<div id="att_total"><span class="label"></span><span class="value"></div>
+			
+			<button id="att_gen_btn" type="button">Reroll</button>
+		</div>
+		<hr />
+		
+		<div id="races" class="container">
+			<label for="race">Select a race:</label>
+			<select name="race" id="race" size="5">
+				<option value="human">Human</option>
+				<option value="orc">Orc</option>
+				<option value="elf" selected>Elf</option>
+				<option value="dwarf">Dwarf</option>
+			</select>
+		</div>
+		<hr />
+		
+		<div id="classes" class="container">
+			<label for="class">Select a class:</label>
+			<select name="class" id="class" size="5">
+				<option value="fighter">Fighter</option>
+				<option value="mage">Mage</option>
+				<option value="cleric" selected>Cleric</option>
+				<option value="thief">Thief</option>
+			</select>
+		</div>
+		<hr />
+		
+		
+		<div id="footer"><h4>footer</h4></div>
+		
+		<script type="text/javascript" src="plugins/jquery-1.11.2.min.js" defer></script>
+		<script type="text/javascript" src="plugins/jquery-ui-1.11.3/external/jquery/jquery.js"></script>
+		<script type="text/javascript" src="plugins/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/utility.js" defer></script>
+	</body>
+	
+</html>

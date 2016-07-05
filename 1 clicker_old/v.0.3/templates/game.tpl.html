@@ -1,0 +1,137 @@
+<div>
+<md-toolbar class="md-warn">
+	<div class="md-toolbar-tools">
+		<h2 class="md-flex">Clicker Game</h2>
+	</div>
+	<div>Widgets: {{model.widgetInfo.currentWidgets | number:0}} || Timer: {{model.elapsed.display | time}} || WPS: {{model.widgetInfo.wps}} || WPC: {{model.clickInfo.currentValue}} || Total Widgets: {{model.widgetInfo.totalWidgets}}</div>
+</md-toolbar>
+
+<md-content layout-padding>
+
+	<div layout="row">
+		<div flex>
+			
+			<md-card>
+				<md-button class="md-raised md-warn" ng-click="callback.clickHandler()" style="height:150px; width:100%;">Click Me</md-button>
+			</md-card>
+
+			<md-card>
+				<md-progress-linear class="md-warn" md-mode="{{model.progressBarMode}}" value="{{model.progressBarValue}}"></md-progress-linear>
+			</md-card>
+
+			<md-card>
+				<div layout="row">
+					<div flex="40">
+						<md-button class="md-raised md-primary" ng-click="callback.save()" style="width:100%;">Save</md-button>
+					</div>
+					<div flex="20">
+					
+					</div>
+					<div flex="40">
+						<md-button class="md-raised md-primary" ng-click="callback.load()" style="width:100%;">Load</md-button>
+					</div>
+				</div>
+			</md-card>
+				
+			<md-card>
+				<md-toolbar class="md-warn">
+					<div class="md-toolbar-tools">
+						<h2 class="md-flex">Achievements<h2>
+					</div>
+				</md-toolbar>
+			</md-card>
+			
+			<div ng-repeat="achievement in model.achievements track by $index">
+				<md-card ng-if="achievement.GetUnlocked()" class="achievement">
+					<md-card-content>
+						<span>{{achievement.GetName()}}</span>
+					</md-card-content>
+				</md-card>
+			</div>
+			
+		</div>
+		<div flex>
+		
+			<md-card>
+				<md-toolbar class="md-warn">
+					<div class="md-toolbar-tools">
+						<h2 class="md-flex">Generators<h2>
+					</div>
+				</md-toolbar>
+			</md-card>
+			
+			<div ng-repeat="generator in model.generators track by $index">
+				<md-card ng-if="generator.unlocked">
+					<md-card-content class="generator">
+						<div layout="row" style="margin-bottom:10px;">
+							<div flex="60">
+								<span>
+									<img src="img/icons_famfam/help.png" />
+									<md-tooltip md-direction="right" style="">This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. </md-tooltip>
+								</span>
+								{{generator.GetName()}} (Level: {{generator.GetOwned()}})<br />
+								{{'WPS: ' + generator.GetModifiedWPS()}} (Total: {{generator.GetCombinedWPS()}})
+							</div>
+							<div flex="40" style="text-align:right">
+								Train: {{generator.GetCost() | number:0}}w<br /> 
+								CPW: {{generator.GetCost()/generator.GetModifiedWPS() | number:0}}
+							</div>
+						</div>
+						<div layout="row">
+							<div flex>
+								<md-button class="md-raised md-warn" ng-click="generator.buy(model.widgetInfo)" style="height:100%; width:100%;">Train
+									
+								</md-button>
+							</div>
+						</div>
+
+					</md-card-content>
+				</md-card>
+			</div>
+		
+		</div>
+		<div flex>
+			<md-card>
+				<md-toolbar class="md-warn">
+					<div class="md-toolbar-tools">
+						<h2 class="md-flex">Available Upgrades</h2>
+					</div>
+				</md-toolbar>
+			</md-card>
+			
+			<div ng-repeat="upgrade in model.upgrades track by $index">
+				<md-card class="upgrade" ng-if="upgrade.unlocked && !upgrade.purchased">
+					<md-button class="md-raised" style="height:100%; width:100%;" ng-click="upgrade.buy(model.widgetInfo, model.clickInfo)">
+						<div layout="row">
+							<div flex="60">{{upgrade.getName()}}</div>
+							<div flex="40" style="text-align:right">Cost: {{upgrade.getCost()}}</div>
+						</div>
+					</md-button>
+				</md-card>
+			</div>
+
+			<md-card>
+				<md-toolbar class="md-warn">
+					<div class="md-toolbar-tools">
+						<h2 class="md-flex">Purchased Upgrades</h2>
+					</div>
+				</md-toolbar>
+			</md-card>
+			
+			<div ng-repeat="upgrade in model.upgrades track by $index">
+				<md-card class="upgrade" ng-if="upgrade.purchased">
+					<md-button class="md-raised" style="height:100%; width:100%;">
+						<div layout="row">
+							<div flex=>{{upgrade.getName()}}</div>
+						</div>
+					</md-button>
+				</md-card>
+			</div>
+		</div>
+	</div>
+
+
+
+</md-content>
+  
+</div>

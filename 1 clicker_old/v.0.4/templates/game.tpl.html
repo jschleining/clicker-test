@@ -1,0 +1,140 @@
+<div>
+<md-toolbar class="md-primary">
+	<div class="md-toolbar-tools">
+		<h2 class="md-flex">{{model.appData.GetTitle()}}</h2>
+	</div>
+	<div layout="row">
+		<div flex layout layout="start">
+			{{'Widgets: ' + model.appData.GetCurrentWidgets()}} ||
+			{{'WPC: ' + model.appData.GetWidgetsPerClick()}} ||
+			{{'WPS: ' + model.appData.GetWidgetsPerSecond()}}
+		</div>
+		<div flex layout layout="end">
+			{{'Total Earned Widgets: ' + model.appData.GetWidgetsThisGame()}}
+		</div>
+	</div>
+	
+</md-toolbar>
+
+<md-content layout-padding>
+
+	<div layout="row">
+		<div flex>
+			<md-button class="md-raised md-primary" ng-click="callback.save()">
+				Save
+			</md-button>
+		</div>
+
+		<div flex>
+			<md-button class="md-raised md-primary" ng-click="callback.load()">
+				Load
+			</md-button>
+		</div>
+
+		<div flex>
+			<md-button class="md-raised md-warn" ng-click="callback.hardReset()">
+				Reset
+			</md-button>
+		</div>
+
+		<div flex>
+			<md-button class="md-raised md-warn" ng-click="callback.softReset()">
+				Prestige
+			</md-button>
+		</div>
+	</div>
+
+	<div layout="row">
+		<div flex>
+			<md-card>
+				<md-button class="md-raised md-primary" ng-click="callback.clickHandler()" style="height:150px; width:100%;">
+					Click Me
+				</md-button>
+			</md-card>
+
+			<!--<md-card>
+				<pre>{{model.appData | json}}</pre>
+			</md-card>-->
+		</div>
+
+		
+
+
+
+
+		<div flex>
+		
+			<md-card>
+				<md-toolbar class="md-primary">
+					<div class="md-toolbar-tools">
+						<h2 class="md-flex">Generators<h2>
+					</div>
+				</md-toolbar>
+			</md-card>
+			
+			<div ng-repeat="generator in model.generators track by $index">
+				<md-card ng-if="generator.unlocked">
+					<md-card-content class="generator">
+						<div layout="row" style="margin-bottom:10px;">
+							<div flex="60">
+								<span>
+									<img src="img/icons_famfam/help.png" />
+									<md-tooltip md-direction="right" style="">This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. This is a tooltip. </md-tooltip>
+								</span>
+								{{generator.GetName()}} (Owned: {{generator.GetOwned()}})<br />
+								{{'WPS: ' + generator.GetModifiedWPS()}} (Total: {{generator.GetCombinedWPS()}})
+							</div>
+							<div flex="40" style="text-align:right">
+								Buy: {{generator.GetCost(generator.costIndex) | number:0}}w<br /> 
+								CPW: {{generator.GetCost(generator.costIndex)/generator.GetModifiedWPS() | number:0}}
+							</div>
+						</div>
+						<div layout="row" style="margin-bottom:10px;">
+							Generated: {{generator.GetTotalGenerated()}}
+						</div>
+						<div layout="row">
+							<div flex>
+								<md-button class="md-raised md-warn" ng-click="generator.buy(generator.costIndex, model.appData.GetCurrentWidgets())" style="height:100%; width:100%;">Buy
+								</md-button>
+							</div>
+						</div>
+						<div layout="row">
+
+							<div flex="15" layout layout-align="start center">
+								<span class="md-body-1">Quantity:</span>
+							</div>
+
+							<div flex="10" layout layout-align="start center">
+								<span class="md-body-1">{{generator.GetQuantity(generator.costIndex)}}</span>
+							</div>
+
+							<div flex="75">
+								<md-slider 
+									flex 
+									class="md-primary" 
+									md-discrete 
+									ng-model="generator.costIndex"
+									step="1" 
+									min="0" 
+									max="{{generator.GetCostOptionsLength() - 1}}"
+									aria-label="">
+									<!-- aria-label does not want to read the results for the function aria-label="generator.GetQuantity(generator.costIndex)" -->
+								</md-slider>
+							</div>
+						</div>
+					</md-card-content>
+				</md-card>
+			</div>
+		
+		</div>
+
+
+
+
+
+
+	</div>
+
+</md-content>
+  
+</div>

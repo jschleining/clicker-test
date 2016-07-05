@@ -1,0 +1,128 @@
+a {
+	text-decoration: none;
+}
+
+a, a:visited, a:hover { color: #00F; }
+
+#saveStatus {
+	display: none; 
+	font-size: 24px; 
+	width: 400px;
+	margin: auto;
+	padding: 10px; 
+	border-radius: 10px; 
+	background-color: #444; 
+	color: #EEE;
+	border: 1px solid black;
+	font-family: Tahoma;
+}
+
+body {
+	background-color: #F8E0F7;
+}
+
+h1 {
+	font-family: 'Unkempt', cursive;
+	font-size: 48px;
+	margin: none;
+	padding: none;
+}
+
+div.dickDisplay, .magicCenterElement, h1 {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+div.dickDisplay {
+	font-family: 'Unkempt', cursive;
+	font-weight: 400;
+	font-size: 36px;
+	
+}
+
+h1, div.dickDisplay {
+	text-shadow: #000 0px 1px 1px;
+}
+
+.buyButton:enabled, #suckDickButton {
+	width: 275px;
+	white-space: normal;
+	background: linear-gradient(to bottom, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+	color: #000;
+	border: 1px solid gray;
+	border-radius: 20px;
+	margin-bottom: 2px;
+}
+
+#consumablesContainer > .buyButton:enabled {
+	width: 275px;
+	white-space: normal;
+	color: #000;
+	border: 1px solid gray;
+	border-radius: 20px;
+	margin-bottom: 2px;
+	background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%);
+}
+
+.buyButton:disabled, #consumablesContainer > .buyButton:disabled {
+	width: 275px;
+	white-space: normal;
+	color: #000;
+	border: 1px solid gray;
+	border-radius: 20px;
+	margin-bottom: 2px;
+	background-color: #999;
+	color: #333;
+}
+
+#slogan, #allTimeDicksSucked {
+	margin-bottom: 30px;
+	font-style: italic;
+}
+
+#allTimeDicksSucked {
+	font-size: 12px;
+}
+
+#suckDickButton {
+	width: 250px;
+	height: 75px;
+	font-size: 24px;
+}
+
+.buttonImage {
+	vertical-align: middle;
+}
+
+.left { margin-right: 10px; }
+.right { margin-left: 10px; }
+
+.hidden {
+	display: none;
+}
+
+#shopContainer, #grafixContainer {
+	width: 310px;
+}
+
+#shopContainer {
+	float: right;
+	overflow: auto;
+}
+
+#grafixContainer {
+	position: relative;
+	float: left;
+}
+
+#footer {
+	margin-bottom: 10px;
+	position: absolute; 
+	bottom: 0; 
+	width: 99%;
+}
+
+.grafix {
+	position: absolute;
+}

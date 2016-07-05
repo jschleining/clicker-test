@@ -7,8 +7,9 @@ angular.module('clickerApp')
     factory_.id = data.id;
     factory_.name = data.name;
     factory_.description = data.description;
-    factory_.cost = data.cost;
-    factory_.owned = data.owned;
+    factory_.baseCost = data.baseCost;
+    factory_.currentCost = data.baseCost;
+    factory_.owned = 0;
   }
 
   Resource.prototype.updateQuantity = function(qty) {

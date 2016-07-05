@@ -13,8 +13,8 @@
 		  	<div layout="row" layout-align="center start">
 					<i class="material-icons click-target" ng-click="vm.onClickTargetClick()">group_work</i>
 			  </div>
-				<span><span class="bold">Points:</span> {{vm.widgets}}</span>
-				<span><span class="bold">Per Second:</span> {{vm.wps}}</span>
+				<span><span class="bold">Points:</span> {{vm.saveData.currentWidgets}}</span>
+				<span><span class="bold">Per Second:</span> {{vm.saveData.widgetsPerSecond}}</span>
 				<span><span class="bold">Auto Clicker:</span> 0</span>
 				<span><span class="bold">Ticks:</span> {{vm.ticks}}</span>
 		  </div>
@@ -43,9 +43,9 @@
 			<div layout="column" class="content">
 		  	<div ng-repeat="factory in vm.factories track by $index" class="factory">
 		  		<div layout="row" layout-align="space-between center">
-						<span>{{factory.name}} ({{factory.owned}}) (WPS: {{factory.production}})</span>
+						<span>{{factory.name}} ({{factory.owned}}) (WPS: {{factory.currentProduction}})</span>
 			  		<div>
-							<span>cost: {{factory.cost}}</span>
+							<span>cost: {{factory.currentCost}}</span>
 							<md-button class="md-raised md-primary" ng-click="vm.buyFactory($index)">Buy</md-button>
 			  		</div>
 		  		</div>

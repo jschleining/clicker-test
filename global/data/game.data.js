@@ -7,50 +7,44 @@ angular.module('clickerApp')
   RESOURCES: [
     {
       id: 'rid-0001',
-      name: 'thing 1',
-      description: 'an awesome description',
-      cost: 10,
-      owned: 0
+      name: 'Resource 1',
+      description: 'lorem ipsum dolor sit amet',
+      baseCost: 10
     },
     {
       id: 'rid-0002',
-      name: 'thing 2',
+      name: 'Resource 2',
       description: 'lorem ipsum dolor sit amet',
-      cost: 20,
-      owned: 0
+      baseCost: 20
     },
     {
       id: 'rid-0003',
-      name: 'thing 3',
-      description: 'an awesome description',
-      cost: 30,
-      owned: 0
+      name: 'Resource 3',
+      description: 'lorem ipsum dolor sit amet',
+      baseCost: 30
     }
   ],
   FACTORIES: [
     {
       id: 'fid-0001',
-      name: 'factory 1',
-      description: 'an awesome description',
-      cost: 10,
-      owned: 0,
-      production: 1
+      name: 'Factory 1',
+      description: 'lorem ipsum dolor sit amet',
+      baseCost: 10,
+      baseProduction: 1
     },
     {
       id: 'fid-0002',
-      name: 'factory 2',
-      description: 'an awesome description',
-      cost: 50,
-      owned: 0,
-      production: 5
+      name: 'Factory 2',
+      description: 'lorem ipsum dolor sit amet',
+      baseCost: 50,
+      baseProduction: 5
     },
     {
       id: 'fid-0003',
-      name: 'factory 3',
-      description: 'an awesome description',
-      cost: 100,
-      owned: 0,
-      production: 10
+      name: 'Factory 3',
+      description: 'lorem ipsum dolor sit amet',
+      baseCost: 100,
+      baseProduction: 10
     },
   ]
 })

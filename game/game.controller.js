@@ -6,8 +6,6 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 	vm_.storage = Storage;
 	vm_.saveData = Storage.saveData;
 	vm_.clickValue = 1;
-	vm_.widgets = 0;
-	vm_.wps = 0;
 	vm_.resources = [];
 	vm_.factories = [];
 	vm_.timer;
@@ -22,20 +20,17 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 	vm_.stop = stop_;
 
 	function updateGame_() {
-		vm_.ticks++;
 		var wps = 0;
 
 		for (var i = 0; i < vm_.factories.length; i++) {
 			wps += vm_.factories[i].totalProduction;
 		}
 
-		if (vm_.wps != wps) {
-			vm_.wps = wps;
+		if (vm_.saveData.widgetsPerSecond != wps) {
+			vm_.saveData.widgetsPerSecond = wps;
 		}
 
-		vm_.widgets += vm_.wps;
-
-		// $rootScope.$broadcast( "ping" );
+		vm_.saveData.currentWidgets += vm_.saveData.widgetsPerSecond;
 	}
 
 	function init_() {
@@ -50,6 +45,8 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 				new Factories.getFactory(GameData.FACTORIES[factory])
 			);
 		}
+
+		updateGame_();
 
 		vm_.start();
 	}
@@ -67,31 +64,22 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 	}
 
 	function onClickTargetClick_() {
-		vm_.widgets += vm_.saveData.widgetsPerClick;
+		vm_.saveData.currentWidgets += vm_.saveData.widgetsPerClick;
 	}
 
 	function buyResource_(index) {
-		if (vm_.widgets >= vm_.resources[index].cost) {
-			vm_.widgets -= vm_.resources[index].cost;
+		if (vm_.saveData.currentWidgets >= vm_.resources[index].currentCost) {
+			vm_.saveData.currentWidgets -= vm_.resources[index].currentCost;
 			vm_.resources[index].updateQuantity(1);
 		}
 	}
 
 	function buyFactory_(index) {
-		if (vm_.widgets >= vm_.factories[index].cost) {
-			vm_.widgets -= vm_.factories[index].cost;
-			vm_.factories[index].updateQuantity(1);
+		if (vm_.saveData.currentWidgets >= vm_.factories[index].currentCost) {
+			vm_.saveData.currentWidgets -= vm_.factories[index].currentCost;
+			$rootScope.$broadcast( "BUY_FACTORY_" + vm_.factories[index].id );
 		}
 	}
-
-	$scope.$watch(
-		function watchWidgets(scope) {
-			return (vm_.widgets);
-		},
-		function handleWidgetChange(newValue, oldValue) {
-			console.log('Widgets - old | new: ', oldValue, ' | ', newValue);
-		}
-	);
 
 	init_();
 }]);
