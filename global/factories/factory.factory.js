@@ -4,15 +4,24 @@ angular.module('clickerApp')
 
   var Factory = function(data) {
     var factory_ = this;
-    factory_.id = data.id;
-    factory_.name = data.name;
-    factory_.description = data.description;
-    factory_.baseCost = data.baseCost;
-    factory_.currentCost = data.baseCost;
-    factory_.owned = 0;
-    factory_.baseProduction = data.baseProduction;
-    factory_.currentProduction = data.baseProduction;
-    factory_.totalProduction = 0;
+
+    factory_.base = {
+      id: data.id,
+      name: data.name,
+      description: data.description,
+      cost: data.baseCost,
+      production: data.baseProduction,
+      shadowIcon: data.shadowIcon,
+      fullIcon: data.fullIcon
+    };
+
+    factory_.current = {
+      cost: angular.copy(data.baseCost),
+      production: angular.copy(data.baseProduction),
+      totalProduction: 0,
+      owned: 0,
+      state: angular.copy(data.state)
+    };
 
     // testing events
     factory_.unbindHandler = null;
@@ -25,10 +34,10 @@ angular.module('clickerApp')
   // how much it will currentCost to purchase multiples
   Factory.prototype.updateQuantity = function(qty) {
     for (var i = 0; i < qty; i++) {
-      this.owned++;
-      this.currentCost = Math.round(this.currentCost * 1.15);
+      this.current.owned++;
+      this.current.cost = Math.round(this.current.cost * 1.15);
     }
-    this.totalProduction = this.currentProduction * this.owned;
+    this.current.totalProduction = this.current.production * this.current.owned;
   }
 
   Factory.prototype.toggleListener = function() {
@@ -38,13 +47,12 @@ angular.module('clickerApp')
   Factory.prototype.handlePingEvent = function(data) {
     this.eventCount++;
     this.updateQuantity(1);
-    console.log('Purchased ' + this.name + ': ', this.eventCount);
   }
 
   Factory.prototype.startWatchingEvent = function() {
-    console.log('Started Listening');
+    console.log(this.base.name + ' Started Listening');
     var _this = this;
-    this.unbindHandler = $rootScope.$on( "BUY_FACTORY_" + this.id, function(event, data) {_this.handlePingEvent(data);} );
+    this.unbindHandler = $rootScope.$on( "BUY_FACTORY_" + this.base.id, function(event, data) {_this.handlePingEvent(data);} );
     this.isWatchingEvent = true;
   }
 

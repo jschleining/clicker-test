@@ -41,15 +41,21 @@
 		    <h2>Factories</h2>
 		  </md-toolbar>
 			<div layout="column" class="content">
-		  	<div ng-repeat="factory in vm.factories track by $index" class="factory">
+		  	<div ng-repeat="factory in vm.factories track by $index" class="factory" ng-if="factory.current.state !== 'HIDDEN'">
 		  		<div layout="row" layout-align="space-between center">
-						<span>{{factory.name}} ({{factory.owned}}) (WPS: {{factory.currentProduction}})</span>
-			  		<div>
-							<span>cost: {{factory.currentCost}}</span>
+		  			<div>
+							<i class="material-icons icon-silhouette" ng-if="factory.current.state === 'SILHOUETTE'">{{factory.base.shadowIcon}}</i>
+							<span class="bold" ng-if="factory.current.state === 'SILHOUETTE'">? ? ?</span>
+							<i class="material-icons icon-unlocked" ng-if="factory.current.state === 'UNLOCKED'">{{factory.base.fullIcon}}</i>
+		  				<span ng-if="factory.current.state === 'UNLOCKED'">{{factory.base.name}} ({{factory.current.owned}}) (WPS: {{factory.current.production}})</span>
+		  			</div>
+						
+			  		<div ng-if="factory.current.state === 'UNLOCKED'">
+							<span>cost: {{factory.current.cost}}</span>
 							<md-button class="md-raised md-primary" ng-click="vm.buyFactory($index)">Buy</md-button>
 			  		</div>
 		  		</div>
-		  		<p>{{factory.description}}</p>
+		  		<p ng-if="factory.current.state === 'UNLOCKED'">{{factory.base.description}}</p>
 		  	</div>
 		  </div>
   	</section>

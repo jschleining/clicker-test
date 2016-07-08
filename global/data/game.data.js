@@ -30,21 +30,30 @@ angular.module('clickerApp')
       name: 'Factory 1',
       description: 'lorem ipsum dolor sit amet',
       baseCost: 10,
-      baseProduction: 1
+      baseProduction: 1,
+      state: 'UNLOCKED',
+      shadowIcon: 'lens',
+      fullIcon: 'spa'
     },
     {
       id: 'fid-0002',
       name: 'Factory 2',
       description: 'lorem ipsum dolor sit amet',
       baseCost: 50,
-      baseProduction: 5
+      baseProduction: 5,
+      state: 'SILHOUETTE',
+      shadowIcon: 'lens',
+      fullIcon: 'spa'
     },
     {
       id: 'fid-0003',
       name: 'Factory 3',
       description: 'lorem ipsum dolor sit amet',
       baseCost: 100,
-      baseProduction: 10
+      baseProduction: 10,
+      state: 'HIDDEN',
+      shadowIcon: 'lens',
+      fullIcon: 'spa'
     },
   ]
 })

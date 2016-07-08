@@ -5,9 +5,9 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 	var vm_ = this;
 	vm_.storage = Storage;
 	vm_.saveData = Storage.saveData;
-	vm_.clickValue = 1;
 	vm_.resources = [];
 	vm_.factories = [];
+
 	vm_.timer;
 	vm_.ticks = 0;
 	vm_.intervalPeriod = 1000;
@@ -20,10 +20,11 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 	vm_.stop = stop_;
 
 	function updateGame_() {
+		vm_.ticks++;
 		var wps = 0;
 
 		for (var i = 0; i < vm_.factories.length; i++) {
-			wps += vm_.factories[i].totalProduction;
+			wps += vm_.factories[i].current.totalProduction;
 		}
 
 		if (vm_.saveData.widgetsPerSecond != wps) {
@@ -46,8 +47,6 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 			);
 		}
 
-		updateGame_();
-
 		vm_.start();
 	}
 
@@ -65,21 +64,31 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 
 	function onClickTargetClick_() {
 		vm_.saveData.currentWidgets += vm_.saveData.widgetsPerClick;
+		console.log(vm_.factories);
 	}
 
 	function buyResource_(index) {
-		if (vm_.saveData.currentWidgets >= vm_.resources[index].currentCost) {
-			vm_.saveData.currentWidgets -= vm_.resources[index].currentCost;
+		if (vm_.saveData.currentWidgets >= vm_.resources[index].cost) {
+			vm_.saveData.currentWidgets -= vm_.resources[index].cost;
 			vm_.resources[index].updateQuantity(1);
 		}
 	}
 
 	function buyFactory_(index) {
-		if (vm_.saveData.currentWidgets >= vm_.factories[index].currentCost) {
-			vm_.saveData.currentWidgets -= vm_.factories[index].currentCost;
-			$rootScope.$broadcast( "BUY_FACTORY_" + vm_.factories[index].id );
+		if (vm_.saveData.currentWidgets >= vm_.factories[index].current.cost) {
+			vm_.saveData.currentWidgets -= vm_.factories[index].current.cost;
+			$rootScope.$broadcast( "BUY_FACTORY_" + vm_.factories[index].base.id );
 		}
 	}
+
+	// $scope.$watch(
+	// 	function watchWidgets(scope) {
+	// 		return (vm_.widgets);
+	// 	},
+	// 	function handleWidgetChange(newValue, oldValue) {
+	// 		console.log('Widgets - old | new: ', oldValue, ' | ', newValue);
+	// 	}
+	// );
 
 	init_();
 }]);
