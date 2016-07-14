@@ -81,14 +81,5 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 		}
 	}
 
-	// $scope.$watch(
-	// 	function watchWidgets(scope) {
-	// 		return (vm_.widgets);
-	// 	},
-	// 	function handleWidgetChange(newValue, oldValue) {
-	// 		console.log('Widgets - old | new: ', oldValue, ' | ', newValue);
-	// 	}
-	// );
-
 	init_();
 }]);
