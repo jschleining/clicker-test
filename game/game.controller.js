@@ -64,7 +64,6 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 
 	function onClickTargetClick_() {
 		vm_.saveData.currentWidgets += vm_.saveData.widgetsPerClick;
-		console.log(vm_.factories);
 	}
 
 	function buyResource_(index) {
@@ -77,6 +76,7 @@ gameApp.controller('GameController', ['$rootScope', '$scope', '$interval', 'Game
 	function buyFactory_(index) {
 		if (vm_.saveData.currentWidgets >= vm_.factories[index].current.cost) {
 			vm_.saveData.currentWidgets -= vm_.factories[index].current.cost;
+			//Factory.buyFactory("BUY_FACTORY_" + vm_.factories[index].base.id)
 			$rootScope.$broadcast( "BUY_FACTORY_" + vm_.factories[index].base.id );
 		}
 	}

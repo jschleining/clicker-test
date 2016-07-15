@@ -33,7 +33,8 @@ angular.module('clickerApp')
       baseProduction: 1,
       state: 'UNLOCKED',
       shadowIcon: 'lens',
-      fullIcon: 'spa'
+      fullIcon: 'spa',
+      requirements: null
     },
     {
       id: 'fid-0002',
@@ -43,7 +44,23 @@ angular.module('clickerApp')
       baseProduction: 5,
       state: 'SILHOUETTE',
       shadowIcon: 'lens',
-      fullIcon: 'spa'
+      fullIcon: 'spa',
+      requirements: {
+        show: [
+          {
+            type: 'BUY_FACTORY_',
+            target: 'fid-0001',
+            count: 8
+          }
+        ],
+        unlock: [
+          {
+            type: 'BUY_FACTORY_',
+            target: 'fid-0001',
+            count: 10
+          }
+        ]
+      }
     },
     {
       id: 'fid-0003',
@@ -53,7 +70,30 @@ angular.module('clickerApp')
       baseProduction: 10,
       state: 'HIDDEN',
       shadowIcon: 'lens',
-      fullIcon: 'spa'
+      fullIcon: 'spa',
+      requirements: {
+        show: [
+          {
+            type: 'BUY_FACTORY_',
+            target: 'fid-0002',
+            count: 8
+          }
+        ],
+        unlock: [
+          {
+            type: 'BUY_FACTORY_',
+            target: 'fid-0001',
+            count: 10,
+            listenerName: 'factoryOneListener'
+          },
+          { // test
+            type: 'BUY_FACTORY_',
+            target: 'fid-0002',
+            count: 10,
+            listenerName: 'factoryTwoListener'
+          }
+        ]
+      }
     },
   ]
 })
